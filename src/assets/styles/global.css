@@ -1,0 +1,59 @@
+:root {
+    font-size: 60%;
+
+    --color-background: #f0f7f0;
+    --color-primary-lighter: #6a994e;
+    --color-primary-light: #5f8a46;
+    --color-primary: #386641;
+    --color-primary-dark: #325a3a;
+    --color-primary-darker: #2c4e33;
+    --color-secondary: #bc4749;
+    --color-secondary-dark: #a84042;
+    --color-title-in-primary: #FFFFFF;
+     --color-text-in-primary: #f2e8cf;
+    --color-text-title: #32264D;
+    --color-text-complement: #a69898;
+     --color-text-base: #9b9b9b;
+    --color-line-in-white: #E6E6F0;
+     --color-input-background: #F8F8FC;
+     --color-input: #414141;
+     --color-button-text: #FFFFFF;
+    --color-box-base: #FFFFFF;
+    --color-box-footer: #FAFAFC;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+      height: 100vh;
+  }
+
+  body {
+      background: --var(--color-background);
+  }
+
+  #root {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  body, input, textarea, button {
+      font: 500 1.6rem Ubuntu;
+  }
+
+  .container {
+      width: 90vw;
+      max-width: 700px;
+  }
+
+  @media (min-width: 700px) {
+      :root {
+          font-size: 62.5%;
+      }
+  }

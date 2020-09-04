@@ -1,0 +1,113 @@
+#page-landing {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--color-text-in-primary);
+    background: var(--color-primary);
+}
+
+.logo-container img, h1 {
+    height: 10rem;
+    color: var(--color-title-in-primary);
+    font-size: 3.4rem;
+}
+
+.hero-image {
+    width: 100%;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 3.2rem;
+}
+
+.logo-container h2 {
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 4.6rem;
+    margin-top: 0.8rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin: 3.2rem 0;
+}
+
+.buttons-container a {
+    width: 30rem;
+    height: 10.4rem;
+    border-radius: 0.8rem;
+    margin-right: 1.6rem;
+    font: 700 2.0rem Ubuntu;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    color: var(--color-button-text);
+
+    transition: background-color 0.2s;
+}
+
+.buttons-container a.register {
+    background: var(--color-primary-lighter);
+}
+
+.buttons-container a.register:hover {
+    background: var(--color-primary-light);
+}
+
+/* Conversão desktop */
+@media (min-width: 1000px) {
+    #page-landing-content {
+        max-width: 1000px;
+
+        display: grid;
+        grid-template-rows: 350px 1f;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-areas: 
+            "title title logo"
+            "buttons none none"
+        ;
+    }
+
+    .logo-container {
+        grid-area: title;
+        align-self: center;
+        text-align: left;
+        margin: 0;
+    }
+
+    .logo-container h2 {
+        text-align: initial;
+        font-size: 2.6rem;
+        margin-bottom: 8.2rem;
+    }
+
+    .logo-container img, h1 {
+        height: 100%;
+        font-size: 4.6rem;
+        margin-bottom: 5.2rem;
+    }
+
+    .hero-image {
+        grid-area: logo;
+        justify-self: end;
+        padding-left: 6.0rem;
+    }
+
+    .buttons-container {
+        grid-area: buttons;
+        justify-content: flex-start;
+    }
+
+    .buttons-container a {
+        font-size: 2.4rem;
+    }
+}

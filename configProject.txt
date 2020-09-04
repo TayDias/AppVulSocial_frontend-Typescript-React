@@ -1,0 +1,16 @@
+//Para usar Typescript
+npm install typescript -D
+
+
+//Icones e rotas
+npm install react-router-dom
+
+// caso de erro "propety match" rodar: rm package-lock.json
+
+
+//Para as requisições: axios
+npm install axios
+
+
+//mais sobre como usar typescript com react
+//https://github.com/typescript-cheatsheets/react-typescript-cheatsheet
