@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
+import logo from '../../assets/images/logo1.svg'
+
 import './styles.css'
 
 function Landing() {
@@ -12,7 +14,7 @@ function Landing() {
                     <h2>Ajude pessoas vulneráveis a ter uma voz e receber apoio.</h2>
                 </div>
 
-                <img src="" alt="logo" className="hero-image" />
+                <img src={logo} alt="logo" className="hero-image" />
 
                 <div className="buttons-container">
                     <Link to="/register" className="register">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PageHeader from '../../components/PageHeader'
 import StyledInput from '../../components/StyledInput'
 import StyledTextArea from '../../components/StyledTextArea'
@@ -9,6 +9,17 @@ import './styles.css'
 import warningIcon from '../../assets/images/icons/warning.svg'
 
 function Register() {
+    const [scheduleItems, setScheduleItems] = useState([
+        { weekday: 0, from: '', to: '' }
+    ])
+
+    function addNewScheduleItem(){
+        setScheduleItems([
+            ...scheduleItems,
+            { weekday: 0, from: '', to: '' }
+        ])
+    }
+
     return (
         <div id="page-register" className="container">
             <PageHeader 
@@ -44,31 +55,46 @@ function Register() {
                 <fieldset>
                     <legend>Credenciais</legend>
 
-                    <div className="credentials">
-                        <StyledInput name="password" label="Senha de Acesso" type="password" />
-                        <StyledInput name="confirmpassword" label="Confirmação da Senha" type="password" />
-                    </div>        
+                    <div className="input-block">
+                        <div className="credentials">
+                            <StyledInput name="password" label="Senha de Acesso" type="password" />
+                            <StyledInput name="confirmpassword" label="Confirmação da Senha" type="password" />
+                        </div>
+                    </div>       
                 </fieldset>
 
                 <fieldset>
-                    <legend>Horários Disponíveis</legend>
-                    
-                    <StyledSelect 
-                        name="weekday" 
-                        label="Dia da Semana" 
-                        options={[
-                            {id: '1', label: 'Segunda-Feira'},
-                            {id: '2', label: 'Terça-Feira'},
-                            {id: '3', label: 'Quarta-Feira'},
-                            {id: '4', label: 'Quinta-Feira'},
-                            {id: '5', label: 'Sexta-Feira'},
-                            {id: '6', label: 'Sábado'},
-                            {id: '7', label: 'Domingo'},
-                        ]}
-                    />
+                    <legend>
+                        Horários Disponíveis
+                        <button type="button" onClick={addNewScheduleItem}>
+                            + Novo Horário
+                        </button>
+                    </legend>
 
-                    <StyledInput name="from" label="Das" type="time" />
-                    <StyledInput name="to" label="Até" type="time" />
+                    <div className="input-block">
+                        {scheduleItems.map(scheduleItem => {
+                            return (
+                                <div key={Math.random()} className="schedule-item">
+                                    <StyledSelect 
+                                        name="weekday" 
+                                        label="Dia da Semana" 
+                                        options={[
+                                            {id: '0', label: 'Domingo'},
+                                            {id: '1', label: 'Segunda-Feira'},
+                                            {id: '2', label: 'Terça-Feira'},
+                                            {id: '3', label: 'Quarta-Feira'},
+                                            {id: '4', label: 'Quinta-Feira'},
+                                            {id: '5', label: 'Sexta-Feira'},
+                                            {id: '6', label: 'Sábado'}                     
+                                        ]}
+                                    />
+        
+                                    <StyledInput name="from" label="Das" type="time" />
+                                    <StyledInput name="to" label="Até" type="time" />
+                                </div>
+                            )
+                        })}            
+                    </div>
                 </fieldset>
 
                 <footer>
