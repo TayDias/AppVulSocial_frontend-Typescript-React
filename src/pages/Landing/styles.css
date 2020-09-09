@@ -59,11 +59,11 @@
 }
 
 .buttons-container a.register {
-    background: var(--color-primary-lighter);
+    background: var(--color-secondary);
 }
 
 .buttons-container a.register:hover {
-    background: var(--color-primary-light);
+    background: var(--color-secondary-dark);
 }
 
 /* Conversão desktop */
