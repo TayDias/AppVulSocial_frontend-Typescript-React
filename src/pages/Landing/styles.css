@@ -64,16 +64,16 @@
 }
 
 /* Conversão desktop */
-@media (min-width: 1000px) {
+@media (min-width: 700px) {
     #page-landing-content {
         max-width: 1000px;
 
         display: grid;
-        grid-template-rows: 350px 1f;
-        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 350px 1fr;
+        grid-template-columns: 3fr 2fr;
         grid-template-areas: 
-            "title title logo"
-            "buttons none none"
+            "title logo"
+            "buttons none"
         ;
     }
 
@@ -100,6 +100,8 @@
         grid-area: logo;
         justify-self: end;
         padding-left: 6.0rem;
+        width: 110%;
+        height: 110%;
     }
 
     .buttons-container {
