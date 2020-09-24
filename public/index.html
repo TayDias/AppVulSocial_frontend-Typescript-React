@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <base href="%PUBLIC_URL%/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
 
@@ -11,9 +12,14 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Ubuntu:wght@700&display=swap" 
       rel="stylesheet"
     >
+    <!--Bot-->
+    <script src="https://ahimsa-bot.herokuapp.com/assets/modules/channel-web/inject.js"></script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--Bot-->
+    <script>window.botpressWebChat.init({ host: 'https://ahimsa-bot.herokuapp.com/', botId: 'ahimsa' })</script>
+
+    <noscript>You need to enable JavaScript to run this app.</noscript> 
     <div id="root"></div>
     
   </body>
