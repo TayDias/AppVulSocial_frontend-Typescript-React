@@ -49,7 +49,7 @@ function Register() {
         setScheduleItems(updatedScheduleItems)
     }
 
-    function handleregister(e: FormEvent) {
+    function handleRegister(e: FormEvent) {
         e.preventDefault()
 
         if(password === confirmPassword){
@@ -84,7 +84,7 @@ function Register() {
             />
             
             <main>
-                <form onSubmit={handleregister}>
+                <form onSubmit={handleRegister}>
                     <fieldset>
                         <legend>Seus dados</legend>
 

@@ -18,7 +18,10 @@ function Landing() {
 
                 <div className="buttons-container">
                     <Link to="/register" className="register">
-                        Cadastrar-se
+                        Quero Ajudar
+                    </Link>
+                    <Link to="/login" className="login">
+                        Tenho Cadastro
                     </Link>
                 </div>
             </div>           

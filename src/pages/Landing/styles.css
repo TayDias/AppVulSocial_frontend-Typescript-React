@@ -42,11 +42,11 @@
 }
 
 .buttons-container a {
-    width: 30rem;
+    width: 26rem;
     height: 10.4rem;
     border-radius: 0.8rem;
-    margin-right: 1.6rem;
-    font: 700 2.0rem Ubuntu;
+    margin-right: 2.6rem;
+    font: 700 1.8rem Ubuntu;
 
     display: flex;
     align-items: center;
@@ -64,6 +64,14 @@
 
 .buttons-container a.register:hover {
     background: var(--color-secondary-dark);
+}
+
+.buttons-container a.login {
+    background: var(--color-primary-lighter);
+}
+
+.buttons-container a.login:hover {
+    background: var(--color-primary-light);
 }
 
 /* Conversão desktop */
@@ -110,9 +118,10 @@
     .buttons-container {
         grid-area: buttons;
         justify-content: flex-start;
+        height: 8.0rem;
     }
 
     .buttons-container a {
-        font-size: 2.4rem;
+        font-size: 2.3rem;
     }
 }
