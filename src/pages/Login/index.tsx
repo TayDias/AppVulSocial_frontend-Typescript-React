@@ -22,7 +22,7 @@ function Login() {
             const response = await api.post('/login', { email, password })
             
             login(response.headers.authorization)
-            localStorage.setItem('email', email)
+            localStorage.setItem('rescuer_id', response.data.id)
 
             history.push('/profile')
         } 

@@ -6,6 +6,10 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 
+//import { isAuthenticated } from './services/auth'
+
+//Criar a rota profile como privada
+
 const Routes = () => {
     return(
         <BrowserRouter>
