@@ -1,0 +1,175 @@
+body {
+    background-color: #F5F5F6;
+}
+
+#page-profile {
+    width: 100vw;
+    height: 100vh;
+}
+
+#page-profile .page-header .header-content {
+    margin-bottom: 6.4rem;
+}
+
+#menu-items {
+    margin: -3.2rem auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+}
+
+#menu-items .input-block {
+    position: relative;
+}
+
+#menu-items .input-block #agenda {
+    margin-top: -1.4rem !important;
+}
+
+#menu-items .input-block button {
+    width: 100%;
+    height: 5.6rem;
+    border-radius: 0.8rem;
+    outline: 0;
+    padding: 0 1.6rem;
+    font: 1.6rem Ubuntu;
+}
+
+#menu-items .input-block:focus-within::after {
+    width: calc(100% -3.2rem);
+    height: 2px;
+    content: '';
+    background: var(--color-tertiary);
+    position: absolute;
+    left: 1.6rem;
+    right: 1.6rem;
+    bottom: 0;
+}
+
+.on {
+    color: var(--color-text-title);
+    background-color: #F5F5F6;
+    border: 1px solid;
+    border-color: #f1f1f3;
+}
+
+.off {
+    color: var(--color-text-complement);
+    background-color: #6A994E;
+    border: 1px solid;
+    border-color: #5D8745;
+}
+
+#page-profile main {
+    margin: 3.2rem auto;
+    width: 94%;
+}
+
+#page-profile main .without-notifications {
+    position: flex;
+    color: var(--color-text-base);
+    max-width: 100%;
+    padding: 25% 25% 25% 25%;
+    font: 500 1.6rem Ubuntu;
+    line-height: 2.8rem;
+    align-self: center;
+    justify-content: space-evenly;
+}
+
+.agenda-buttons {
+    padding: 2rem 0;
+    margin-top: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.agenda-buttons button {
+    width: 20rem;
+    height: 5.6rem;
+    color: var(--color-button-text);
+    border: 0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: 700 1.4rem Ubuntu;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    transition: 0.2s;
+    outline: 0;
+}
+
+.agenda-buttons .new-schedule button {
+    background: var(--color-tertiary);
+}
+
+.agenda-buttons .new-schedule button:hover {
+    background: var(--color-tertiary-dark);
+}
+
+.agenda-buttons .save-schedules button {
+    background: var(--color-secondary);
+}
+
+.agenda-buttons .save-schedules button:hover {
+    background: var(--color-secondary-dark);
+}
+
+@media (min-width: 700px) {
+    #page-profile {
+        max-width: 100%;
+    }
+
+    #page-profile .page-header .header-content {
+        margin-bottom: 0;
+    }
+
+    #menu-items {
+        margin: -3.6rem auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 1rem;
+        width: 90%;
+        max-width: 760px;
+
+    }
+
+    #page-profile .page-header .header-content {
+        margin-bottom: 2.4rem;
+    }
+
+    #page-profile main {
+        padding: 3.2rem 0;
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    #page-profile header,
+    #page-profile footer {
+        padding: 3.2rem;
+    }
+
+    #page-profile footer,
+    .agenda-buttons {
+        justify-content: flex-end;
+    }
+
+    #page-profile main .without-notifications {
+        max-width: 100%;
+        padding: 25% 25% 25% 25%;
+        align-self: center;
+
+    }
+
+    .agenda-buttons {
+        padding: 1.2rem 0;
+    }
+
+    .agenda-buttons button {
+        width: 20rem;
+        font-size: 1.6rem;
+        justify-content: center;
+        margin-left: 2rem;
+    }
+
+}
