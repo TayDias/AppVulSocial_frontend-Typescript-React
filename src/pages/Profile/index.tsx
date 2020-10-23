@@ -1,7 +1,8 @@
 import React, { FormEvent, useState, useEffect } from 'react'
+import { useHistory } from 'react-router'
 
 import PageHeader from '../../components/PageHeader'
-//import Notification from '../../components/Notification'
+import Notification from '../../components/Notification'
 import Schedule from '../../components/Schedule'
 
 import './styles.css'
@@ -9,11 +10,23 @@ import './styles.css'
 import api from '../../services/api'
 
 function Profile() {
+    const history = useHistory()
     const rescuer_id = localStorage.getItem('rescuer_id')
 
     const [menuOption, setMenuOption] = useState("notification")
     const [agendaClassname, setAgendaClassname] = useState("off")
     const [notificationClassname, setNotificationClassname] = useState("on")
+
+    const [notificationItems, setNotificationItems] = useState([{ 
+        id: 0,
+        protocol: 'none',
+        status: 0,
+        preview: '',
+        accessLink: '',
+        vulnerable_id: 0, 
+        vulnerable_nickname: '',
+        vulnerable_fullname: ''
+    }])
 
     const [scheduleItems, setScheduleItems] = useState([
         { id: 0, weekday: 'Domingo', from: '', to: '', toUpdate: true }
@@ -28,12 +41,19 @@ function Profile() {
     })
 
     useEffect(() => {
-        loadUserInformation()
+        if(rescuer_id) {
+            loadUserInformation()
+            loadNotifications()
+        }
+        else {
+            alert("É necessário fazer o login para acessar seu perfil.")
+            history.push('/login')
+        }
     }, [])
 
-    /*
-    function loadNotifications() {}
-    */
+    function handleOpenChat() {
+        alert('Ops... nosso chat para contato está ainda em desenvolvimento!')
+    }
 
     function handleInsertUpdate(e: FormEvent) {
         e.preventDefault()
@@ -84,15 +104,20 @@ function Profile() {
         setScheduleItems(propsItems)
     }
 
+    async function loadNotifications() {
+        const response = await api.get('assistance')
+
+        setNotificationItems(response.data)
+    }
+
     async function loadSchedules() {
         const response = await api.get('schedules', {
             params: {
                 rescuer_id,
             }
         })
-
+    
         setScheduleItems(response.data)
-        console.log(response.data)
     }
 
     async function loadUserInformation() {
@@ -110,6 +135,7 @@ function Profile() {
             setNotificationClassname("off")         
         }
         else if (id === "notification") {
+            loadNotifications()
             setMenuOption("notification")
             setAgendaClassname("off")
             setNotificationClassname("on")
@@ -147,21 +173,21 @@ function Profile() {
             </form>
 
             <main>
-                {/*<div>
-                        <Notification 
-                            title='Diego precisa de ajuda!'
-                            preview='Preview.'
-                        />
-                        <Notification 
-                            title='Maria precisa de ajuda!'
-                            preview='Teste.'
-                        />
+                { menuOption === "notification" ? 
+                    <div>
+                        { notificationItems[0].protocol !== 'none' ?
+                            <Notification 
+                                notificationItems={notificationItems}
+                                openChat={handleOpenChat}
+                            />
+                            :
+                            <div>
+                                <p className="without-notifications">
+                                    Nenhuma notificação de solicitação de auxílio.
+                                </p>             
+                            </div>
+                        }
                     </div>
-                */}
-                { menuOption === "notification" ?
-                    <p className="without-notifications">
-                        Nenhuma notificação de solicitação de auxílio.
-                    </p>    
                     :
                     <form onSubmit={handleInsertUpdate}>
                         <Schedule 

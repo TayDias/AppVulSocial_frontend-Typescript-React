@@ -1,14 +1,19 @@
+.notifications {
+    padding-bottom: 0.5rem;
+}
+
 .notification {
     background: var(--color-box-base);
     border: 1px solid var(--color-line-in-white);
     border-radius: 0.8rem;
-    margin-top: 7.2rem;
+    margin-top: 7rem;
     overflow: hidden;
     margin-bottom: 4rem;
+    padding-top: 1rem;
 }
 
 .notification + .notification {
-    padding-top: 2.6rem;
+    margin-top: 2rem;
 }
 
 .notification header {
@@ -67,7 +72,11 @@
 
 @media (min-width: 700px) {
     .notification {
-        margin-top: 4.8rem;
+        margin-top: 4rem;
+    }
+
+    .notification + .notification {
+        margin-top: 1rem;
     }
 
     .notification > p {
