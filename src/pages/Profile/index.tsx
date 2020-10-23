@@ -175,7 +175,7 @@ function Profile() {
             <main>
                 { menuOption === "notification" ? 
                     <div>
-                        { notificationItems[0].protocol !== 'none' ?
+                        { notificationItems[0] ?
                             <Notification 
                                 notificationItems={notificationItems}
                                 openChat={handleOpenChat}
