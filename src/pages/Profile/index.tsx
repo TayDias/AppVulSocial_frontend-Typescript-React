@@ -52,7 +52,7 @@ function Profile() {
     }, [])
 
     function handleOpenChat() {
-        alert('Ops... nosso chat para contato está ainda em desenvolvimento!')
+        history.push('/chat')
     }
 
     function handleInsertUpdate(e: FormEvent) {

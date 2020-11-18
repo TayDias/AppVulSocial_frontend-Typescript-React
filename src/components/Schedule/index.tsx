@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useState } from 'react'
+import React, { InputHTMLAttributes } from 'react'
 import StyledInput from '../StyledInput'
 import StyledSelect from '../StyledSelect'
 

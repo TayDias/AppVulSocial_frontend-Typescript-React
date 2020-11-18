@@ -8,11 +8,20 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/react-router-dom": "^5.1.5",
+    "@types/socket.io": "^2.1.11",
+    "@types/socket.io-client": "^1.4.34",
+    "@types/styled-components": "^5.1.4",
+    "@types/uuid": "^8.3.0",
     "axios": "^0.20.0",
+    "polished": "^4.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "socket.io-client": "^3.0.0",
+    "styled": "^1.0.0",
+    "styled-components": "^5.2.1",
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

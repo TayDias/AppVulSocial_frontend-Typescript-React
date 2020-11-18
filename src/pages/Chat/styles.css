@@ -1,0 +1,173 @@
+#page-chat {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-text-in-primary);
+  background: var(--color-primary);
+}
+
+#page-chat form {
+  position: relative;
+  background: var(--color-chat-background);
+  width: 80%;
+  height: 100%;
+  min-height: 50rem;
+  max-height: 65rem;
+  min-width: 36%;
+  max-width: 65rem;
+  border-radius: 0.8rem;
+  margin: 4% auto 4rem;
+  overflow: hidden;
+
+  padding: 2.6rem;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-chat form input {
+  width: 97%;
+  height: 5.6rem;
+  margin: 0.8rem;
+  border-radius: 0.8rem;
+  background: var(--color-input-background);
+  border: 1px solid var(--color-line-white);
+  outline: 0;
+  padding: 0 1.6rem;
+  font: 1.6rem Ubuntu;
+  color: var(--color-input);
+}
+
+#page-chat .username-input {
+  color: #9C98A6;
+  background-color: #F5F5F6;
+}
+
+#page-chat .item-group {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  column-gap: 1.4rem;
+  height: 14%;
+
+  /* Ideia: Trocar texto do botão por icone no modo mobile */
+}
+
+#page-chat .card {
+  width: 97%;
+  height: 100%;
+  min-height: 30rem;
+  max-height: 65%;
+  margin: 0.8rem;
+  margin-top: 16px;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  
+  overflow: auto;
+  background: var(--color-box-base);
+  border: solid #F5F5F6 1px;
+  border-radius: 9px;
+  align-items: center;
+  
+  /* Rolagem com as msgs */
+}
+
+#page-chat .card ul {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#page-chat form span {
+  padding-bottom: 0.6rem;
+}
+
+#page-chat form ul li {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  color: var(--color-text-base);
+  background: var(--color-chat-message);
+  border-radius: 9px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#page-chat form ul li + li {
+  margin-top: 1rem;
+}
+
+#page-chat .othersMessages {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#page-chat .myMessages {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+#page-chat form button {
+  width: 92%;
+  height: 5.6rem;
+  color: var(--color-button-text);
+  border: 0;
+  border-radius: 0.8rem;
+  margin: 0.8rem;
+  margin-top: 1rem;
+  margin-bottom: 2.0rem;
+  font: 700 1.6rem Ubuntu;
+
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+#page-chat .send-button {
+  background: var(--color-tertiary);
+}
+
+#page-chat .disconect-button {
+  background: var(--color-secondary);
+}
+
+@media (min-width: 700px) {
+  #page-chat {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  #page-chat form {
+    max-width: 65rem;
+    max-height: 65rem;
+    min-height: 40rem;
+    height: 100%;
+  }
+
+  #page-chat .card {
+    max-height: 65%;
+    padding-left: 1.5rem;
+    padding-right: 1.7rem;
+  }
+  
+  #page-chat .item-group {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+    column-gap: 1.6rem;
+  }
+}
