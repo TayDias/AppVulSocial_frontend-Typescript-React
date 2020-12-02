@@ -48,7 +48,7 @@ function Profile() {
         title: "Atenção!",
         descripton: "Deseja mesmo encerrar sua sessão?",
         optionOne: "Permanecer",
-        optionTwo: "Sair Agora"
+        optionTwo: "Encerrar Agora"
     }
 
     useEffect(() => {
