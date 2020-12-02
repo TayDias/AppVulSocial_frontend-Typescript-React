@@ -34,6 +34,9 @@ function Profile() {
         { id: 0, weekday: 'Domingo', from: '', to: '', toUpdate: true }
     ])
 
+    // Controle de alterações não salvas
+    const [changeItems, setChangeItems] = useState(false)
+
     const [userData, setUserData] = useState({
         name: "",
         type: "",
@@ -42,14 +45,16 @@ function Profile() {
         available: 1
     })
 
-    let [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
-
-    const alertProps = {
+    // Defaut alert props
+    const [alertData, changeAlertData]  = useState({
         title: "Atenção!",
         descripton: "Deseja mesmo encerrar sua sessão?",
         optionOne: "Permanecer",
         optionTwo: "Encerrar Agora"
-    }
+    })
+
+    const [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
+    const [alertOnAcceptFunction, changeAlertOnAcceptFunction] = useState(() => handleLogout)
 
     useEffect(() => {
         if(rescuer_id) {
@@ -66,10 +71,25 @@ function Profile() {
         changeAlertDialogStatus(true)
     }
     
-    function handleCloseAlert () {
+    async function handleCloseAlert () {
         changeAlertDialogStatus(false)
+
+        // Volta para a defaut - É gambiarra mesmo :P
+        changeAlertData({
+            title: "Atenção!",
+            descripton: "Deseja mesmo encerrar sua sessão?",
+            optionOne: "Permanecer",
+            optionTwo: "Encerrar Agora"
+        })
+        changeAlertOnAcceptFunction(() => handleLogout)
     }
 
+    async function handleContinueAction() {
+        changeMenuOption("notification")
+        setChangeItems(false)
+    }
+
+    // Defaut alert function
     async function handleLogout() {
         logout()
         history.push('/')
@@ -77,6 +97,25 @@ function Profile() {
 
     function handleOpenChat() {
         history.push('/chat')
+    }
+
+    function choseAlertDataAndFunction(option: string) {
+        if(changeItems) {
+            if(option === "discartChanges") {
+                changeAlertData({
+                    title: "Atenção!",
+                    descripton: "Notei que você não salvou as alterações feitas na agenda, deseja mesmo descarta-las?",
+                    optionOne: "Permanecer na agenda",
+                    optionTwo: "Descartar alterações"
+                })
+                changeAlertOnAcceptFunction(() => handleContinueAction)
+            }
+
+            handleOpenAlert()
+        }
+        else {
+            handleContinueAction()
+        }
     }
 
     function handleInsertUpdate(e: FormEvent) {
@@ -102,6 +141,7 @@ function Profile() {
             alert('Erro na alteração dos itens!')
         })
 
+        setChangeItems(false)
         alert('Agenda atualizada com sucesso!')
     }
 
@@ -110,6 +150,7 @@ function Profile() {
             ...scheduleItems,
             { id: 0, weekday: 'Domingo', from: '', to: '', toUpdate: false }
         ])
+        setChangeItems(true)
     }
 
     function setScheduleItemValue(position:number, field: string, value:string){
@@ -125,6 +166,7 @@ function Profile() {
             return scheduleItem
         })
 
+        setChangeItems(true)
         setScheduleItems(propsItems)
     }
 
@@ -169,9 +211,9 @@ function Profile() {
     return (
         <div id="page-profile" className="container">
             <AlertDialog 
-                alertProps = {alertProps}
+                alertProps = {alertData}
                 isOpen = {alertDialogIsOpen}
-                onAccept= {handleLogout}
+                onAccept= {alertOnAcceptFunction}
                 onClose= {handleCloseAlert}
             />
 
@@ -187,7 +229,7 @@ function Profile() {
                         type="button" 
                         id="notification" 
                         className={notificationClassname} 
-                        onClick={() => changeMenuOption("notification")}
+                        onClick={() => choseAlertDataAndFunction("discartChanges")}
                     >
                         Notificações
                     </button>

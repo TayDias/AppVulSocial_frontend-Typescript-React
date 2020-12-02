@@ -9,7 +9,7 @@ interface AlertProps extends InputHTMLAttributes<HTMLInputElement> {
         descripton: string,
         optionOne: string,
         optionTwo: string,
-    }
+    },
     isOpen: boolean,
     onAccept: any
     onClose: any
@@ -34,12 +34,12 @@ const AlertDialog: React.FC<AlertProps> = ( props ) => {
             >
                 <div className="content" id="container">           
                     <DialogTitle id="title" className="alert-title">
-                        <text>{props.alertProps.title}</text>
+                        <span>{props.alertProps.title}</span>
                     </DialogTitle>
 
                     <DialogContent>
                         <DialogContentText id="description" className="alert-description">
-                            <text>{props.alertProps.descripton}</text>
+                            <span>{props.alertProps.descripton}</span>
                         </DialogContentText>
                     </DialogContent>
 
@@ -51,8 +51,8 @@ const AlertDialog: React.FC<AlertProps> = ( props ) => {
                             {props.alertProps.optionTwo}
                         </button>
                     </DialogActions>
-                </div>
-            </Dialog>
+                </div>    
+            </Dialog>         
         </div>
     )
   
