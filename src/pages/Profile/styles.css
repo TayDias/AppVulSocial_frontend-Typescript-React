@@ -118,6 +118,7 @@ body {
 @media (min-width: 700px) {
     #page-profile {
         max-width: 100%;
+        margin-top: -5.4rem;
     }
 
     #page-profile .page-header .header-content {

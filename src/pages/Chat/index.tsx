@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import AlertDialog from '../../components/AlertDialog'
+
 import './styles.css'
 
 function Chat() {
@@ -9,16 +11,39 @@ function Chat() {
   const [username] = useState('Vulnerável')
   const [message, setMessage] = useState('')
 
+  let [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
+
+  const alertProps = {
+    title: "Atenção!",
+    descripton: "Deseja mesmo encerrar essa conversa?",
+    optionOne: "Permanecer",
+    optionTwo: "Encerrar Agora"
+  }
+
   async function sendMessage() {
     console.log("Send message")
   }
 
+  async function handleOpenAlert() {
+    changeAlertDialogStatus(true)
+  }
+
+  function handleCloseAlert () {
+    changeAlertDialogStatus(false)
+}
+
   async function handleDisconect() {
-    history.push('/')
+    history.push("/profile")
   }
 
   return (
     <div id="page-chat" className="container">
+      <AlertDialog 
+        alertProps = {alertProps}
+        isOpen = {alertDialogIsOpen}
+        onAccept= {handleDisconect}
+        onClose= {handleCloseAlert}
+      />
       <form action="">
         <div className="item-group">
           <input
@@ -32,7 +57,7 @@ function Chat() {
           <button 
             className="disconect-button" 
             type="button" 
-            onClick={() => handleDisconect()}>
+            onClick={() => handleOpenAlert()}>
               Encerrar Sessão
           </button>
         </div>

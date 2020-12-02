@@ -15,11 +15,23 @@
 }
 
 .page-header .top-bar-container a {
-    height: 3.2rem;
+    height: 2.2rem;
     transition: opacity 0.2s;
 }
 
 .page-header .top-bar-container a:hover {
+    opacity: 0.6;
+}
+
+.page-header .top-bar-container .logout {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    background: none;
+    border: none;
+    text-decoration: none;
+}
+
+.page-header .top-bar-container .logout:hover {
     opacity: 0.6;
 }
 

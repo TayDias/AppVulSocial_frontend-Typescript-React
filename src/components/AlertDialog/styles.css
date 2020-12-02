@@ -1,0 +1,79 @@
+.content {
+    max-width: 55rem;
+    max-height: 25rem;
+    margin: 0.8rem;
+    border-radius: 0.8rem;
+    background: var(--color-input-background);
+    border: 1px solid var(--color-line-white);
+    outline: 0;
+    padding: 0 1.6rem;
+}
+
+.alert-title text {
+    color: #58565c;
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.alert-description text {
+    color: #58565c;
+    font-family: Ubuntu;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.alert-actions {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.alert-actions button {
+    width: 92%;
+    height: 5.6rem;
+    color: var(--color-button-text);
+    border: 0;
+    border-radius: 0.8rem;
+    margin: 0.8rem;
+    margin-top: 1rem;
+    margin-bottom: 2.0rem;
+    font: 700 1.6rem Ubuntu;
+
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.alert-actions .decline {
+    background: var(--color-tertiary);
+}
+
+.alert-actions .confirm {
+    background: var(--color-secondary);
+}
+
+.alert-actions button.decline:hover {
+    background: var(--color-tertiary-dark);
+}
+
+.alert-actions button.confirm:hover {
+    background: var(--color-secondary-dark);
+}
+
+@media (min-width: 700px) {
+    #container {
+        min-width: 55rem;
+        min-height: 20rem;
+    }
+}

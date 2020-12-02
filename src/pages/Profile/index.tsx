@@ -4,10 +4,12 @@ import { useHistory } from 'react-router'
 import PageHeader from '../../components/PageHeader'
 import Notification from '../../components/Notification'
 import Schedule from '../../components/Schedule'
+import AlertDialog from '../../components/AlertDialog'
 
 import './styles.css'
 
 import api from '../../services/api'
+import { logout } from '../../services/auth'
 
 function Profile() {
     const history = useHistory()
@@ -40,6 +42,15 @@ function Profile() {
         available: 1
     })
 
+    let [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
+
+    const alertProps = {
+        title: "Atenção!",
+        descripton: "Deseja mesmo encerrar sua sessão?",
+        optionOne: "Permanecer",
+        optionTwo: "Sair Agora"
+    }
+
     useEffect(() => {
         if(rescuer_id) {
             loadUserInformation()
@@ -50,6 +61,19 @@ function Profile() {
             history.push('/login')
         }
     }, [])
+
+    async function handleOpenAlert() {
+        changeAlertDialogStatus(true)
+    }
+    
+    function handleCloseAlert () {
+        changeAlertDialogStatus(false)
+    }
+
+    async function handleLogout() {
+        logout()
+        history.push('/')
+    }
 
     function handleOpenChat() {
         history.push('/chat')
@@ -144,9 +168,17 @@ function Profile() {
 
     return (
         <div id="page-profile" className="container">
+            <AlertDialog 
+                alertProps = {alertProps}
+                isOpen = {alertDialogIsOpen}
+                onAccept= {handleLogout}
+                onClose= {handleCloseAlert}
+            />
+
             <PageHeader 
                 title={`Olá ${userData.name}, que bom que você está aqui agora!`}
                 description="Você pode ver aqui quem está precisando de ajuda  e organizar sua agenda."
+                logout={handleOpenAlert}
             />
 
             <form id="menu-items">

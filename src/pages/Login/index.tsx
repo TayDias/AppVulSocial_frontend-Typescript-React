@@ -20,8 +20,8 @@ function Login() {
 
         try {
             const response = await api.post('/login', { email, password })
-            
-            login(response.headers.authorization)
+    
+            login(response.data.token)
             localStorage.setItem('rescuer_id', response.data.id)
 
             history.push('/profile')
