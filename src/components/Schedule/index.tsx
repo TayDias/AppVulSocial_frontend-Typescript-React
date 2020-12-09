@@ -10,7 +10,7 @@ interface PageScheduleProps extends InputHTMLAttributes<HTMLInputElement>  {
         weekday: string;
         from: string;
         to: string;
-        toUpdate: boolean;
+        action: number;
     }[]
     alterSchedule: any
 }

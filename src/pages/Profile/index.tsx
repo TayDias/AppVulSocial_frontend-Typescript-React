@@ -31,7 +31,7 @@ function Profile() {
     }])
 
     const [scheduleItems, setScheduleItems] = useState([
-        { id: 0, weekday: 'Domingo', from: '', to: '', toUpdate: true }
+        { id: 0, weekday: 'Domingo', from: '', to: '', action: 1 }
     ])
 
     // Controle de alterações não salvas
@@ -99,7 +99,7 @@ function Profile() {
         history.push('/chat')
     }
 
-    function choseAlertDataAndFunction(option: string) {
+    function choseAlertData(option: string) {
         if(changeItems) {
             if(option === "discartChanges") {
                 changeAlertData({
@@ -121,34 +121,55 @@ function Profile() {
     function handleInsertUpdate(e: FormEvent) {
         e.preventDefault()
 
-        const scheduleItemsToInsert = scheduleItems.filter(item => !item.toUpdate)
-        const scheduleItemsToUpdate = scheduleItems.filter(item => item.toUpdate)
+        const scheduleItemsToInsert = scheduleItems.filter(item => item.action === 0)
+        const scheduleItemsToUpdate = scheduleItems.filter(item => item.action === 1)
+        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 2)
 
         //Insert new items
-        api.post('schedules', {
-            rescuer_id,
-            schedules: scheduleItemsToInsert
-        }).catch(() => {
-            alert('Erro na insersão de novos itens!')
-        })
+        if(scheduleItemsToInsert.length > 0){
+            api.post('schedules', {
+                rescuer_id,
+                schedules: scheduleItemsToInsert
+            }).catch(() => {
+                alert('Erro na insersão de novos itens!')
+            })
+        }
 
         //Update items
-        api.put('schedules', {
-            rescuer_id,
-            schedules: scheduleItemsToUpdate
+        if(scheduleItemsToUpdate.length > 0){
+            api.put('schedules', {
+                rescuer_id,
+                schedules: scheduleItemsToUpdate
 
-        }).catch(() => {
-            alert('Erro na alteração dos itens!')
-        })
+            }).catch(() => {
+                alert('Erro na alteração dos itens!')
+            })
+        }
+
+        //Delete Items
+        if(scheduleItemsToDelete.length > 0){
+            api.delete('schedules', {
+                data: {
+                    schedules: scheduleItemsToDelete
+                }   
+
+            }).catch(() => {
+                alert('Erro na exclusão dos itens!')
+            })
+        }
 
         setChangeItems(false)
         alert('Agenda atualizada com sucesso!')
     }
 
+    function removeScheduleItem(){
+        console.log("Removeu o item")
+    }
+
     function addNewScheduleItem(){
         setScheduleItems([
-            ...scheduleItems,
-            { id: 0, weekday: 'Domingo', from: '', to: '', toUpdate: false }
+            { id: 0, weekday: 'Domingo', from: '00:00', to: '00:00', action: 0 },
+            ...scheduleItems
         ])
         setChangeItems(true)
     }
@@ -229,7 +250,7 @@ function Profile() {
                         type="button" 
                         id="notification" 
                         className={notificationClassname} 
-                        onClick={() => choseAlertDataAndFunction("discartChanges")}
+                        onClick={() => choseAlertData("discartChanges")}
                     >
                         Notificações
                     </button>
@@ -263,12 +284,7 @@ function Profile() {
                         }
                     </div>
                     :
-                    <form onSubmit={handleInsertUpdate}>
-                        <Schedule 
-                            scheduleItems={scheduleItems}
-                            alterSchedule={setScheduleItemValue}
-                        />
-                    
+                    <form onSubmit={handleInsertUpdate}> 
                         <div className="agenda-buttons">
                             <div className="new-schedule">
                                 <button type="button" onClick={addNewScheduleItem}>Incluir Novo</button>
@@ -277,6 +293,11 @@ function Profile() {
                                 <button type="submit" >Salvar Alterações</button>
                             </div>
                         </div> 
+
+                        <Schedule 
+                            scheduleItems={scheduleItems}
+                            alterSchedule={setScheduleItemValue}
+                        />
                     </form> 
                 }
             </main>

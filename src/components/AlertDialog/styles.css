@@ -6,7 +6,7 @@
     background: var(--color-input-background);
     border: 1px solid var(--color-line-white);
     outline: 0;
-    padding: 0 1.6rem;
+    padding: 0.5rem 1.6rem 0;
 }
 
 .alert-title span {
@@ -46,6 +46,7 @@
     margin-top: 1rem;
     margin-bottom: 2.0rem;
     font: 700 1.6rem Ubuntu;
+    padding: 0 0.5rem;
 
     text-decoration: none;
     cursor: pointer;
