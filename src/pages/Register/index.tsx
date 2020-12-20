@@ -210,7 +210,7 @@ function Register() {
                         <p>
                             <img src={warningIcon} alt="Importante" />
                             Importante! <br />
-                            Preencha todos os dados
+                            Preencha todos os dados antes de salvar
                         </p>
                         <button type="submit">
                             Salvar cadastro

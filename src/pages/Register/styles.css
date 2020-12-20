@@ -155,6 +155,7 @@ body {
 
     #page-register main footer p {
         justify-content: space-between;
+        color: var(--color-text-title);
     }
 
     #page-register main footer button {

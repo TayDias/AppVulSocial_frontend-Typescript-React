@@ -12,12 +12,27 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Ubuntu:wght@700&display=swap" 
       rel="stylesheet"
     >
-    <!--Bot-->
-    <script src="https://ahimsa-bot.herokuapp.com/assets/modules/channel-web/inject.js"></script>
+    <!--Bot antigo do Botpress
+    <script src="https://ahimsa-bot.herokuapp.com/assets/modules/channel-web/inject.js"></script> -->
   </head>
   <body>
-    <!--Bot-->
-    <script>window.botpressWebChat.init({ host: 'https://ahimsa-bot.herokuapp.com/', botId: 'ahimsa' })</script>
+    <!--Bot antigo do Botpress
+    <script>window.botpressWebChat.init({ host: 'https://ahimsa-bot.herokuapp.com/', botId: 'ahimsa' })</script> -->
+
+    <!-- Bot do Blip -->
+    <script src="https://unpkg.com/blip-chat-widget" type="text/javascript">
+    </script>
+    <script>
+        (function () {
+            window.onload = function () {
+                new BlipChat()
+                .withAppKey('Y2hhdGJvdGN5YmVyYnVsbGV2aW9sZW5jaWE6ZWE0MzA0ZmMtOGQxYi00N2EyLThjYjctZTJlYjg4NGFhNzAz')
+                .withButton({"color":"#a7c957","icon":""})
+                .withCustomCommonUrl('https://chat.blip.ai/')
+                .build();
+            }
+        })();
+    </script>                                  
 
     <noscript>You need to enable JavaScript to run this app.</noscript> 
     <div id="root"></div>
