@@ -168,7 +168,7 @@ function Profile() {
 
     function addNewScheduleItem(){
         setScheduleItems([
-            { id: 0, weekday: 'Domingo', from: '00:00', to: '00:00', action: 0 },
+            { id: 0, weekday: '0', from: '00:00', to: '00:00', action: 0 },
             ...scheduleItems
         ])
         setChangeItems(true)
