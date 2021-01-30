@@ -123,7 +123,7 @@ function Profile() {
 
         const scheduleItemsToInsert = scheduleItems.filter(item => item.action === 0)
         const scheduleItemsToUpdate = scheduleItems.filter(item => item.action === 1)
-        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 2)
+        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 2)   
 
         //Insert new items
         if(scheduleItemsToInsert.length > 0){
@@ -157,6 +157,15 @@ function Profile() {
                 alert('Erro na exclusão dos itens!')
             })
         }
+
+        //Atualizar status para não haver insert duplicado
+        const refreshItems = scheduleItems.map((scheduleItem:any, index: number) => {
+            return {
+                ...scheduleItem, action: 1
+            }
+        })
+
+        setScheduleItems(refreshItems)
 
         setChangeItems(false)
         alert('Agenda atualizada com sucesso!')

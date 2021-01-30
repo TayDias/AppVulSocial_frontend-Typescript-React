@@ -20,11 +20,19 @@ function Login() {
 
         try {
             const response = await api.post('/login', { email, password })
-    
-            login(response.data.token)
-            localStorage.setItem('rescuer_id', response.data.id)
 
-            history.push('/profile')
+            if (!response.data.isRescuer) {
+                alert('Este espaço é reservado para a rede de atendimento, no futuro a rede de vulneráveis  terá um espaço só para si!')
+
+            }
+
+            else {
+                login(response.data.token)
+                localStorage.setItem('rescuer_id', response.data.id)
+
+                history.push('/profile')
+            }
+            
         } 
         catch (err) {
             alert('Houve um problema ao realizar o login, verifique suas credenciais.')

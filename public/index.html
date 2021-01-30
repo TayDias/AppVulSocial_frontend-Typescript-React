@@ -23,15 +23,45 @@
     <script src="https://unpkg.com/blip-chat-widget" type="text/javascript">
     </script>
     <script>
-        (function () {
+        var blipChat;
+        var div;
+
+        function createBlipChat () {  
+          var blip = new BlipChat()
+                  .withAppKey('Y2hhdGJvdGN5YmVyYnVsbGV2aW9sZW5jaWE6ZWE0MzA0ZmMtOGQxYi00N2EyLThjYjctZTJlYjg4NGFhNzAz')
+                  .withButton({"color":"#a7c957","icon":""})
+                  .withCustomCommonUrl('https://chat.blip.ai/')
+
+          return blip;
+        }
+
+        (function () {  
             window.onload = function () {
-                new BlipChat()
-                .withAppKey('Y2hhdGJvdGN5YmVyYnVsbGV2aW9sZW5jaWE6ZWE0MzA0ZmMtOGQxYi00N2EyLThjYjctZTJlYjg4NGFhNzAz')
-                .withButton({"color":"#a7c957","icon":""})
-                .withCustomCommonUrl('https://chat.blip.ai/')
-                .build();
+              div = document.getElementById('page-landing');
+
+              blipChat = createBlipChat()
+              blipChat.build();
+
+              if (!div) {
+                blipChat.destroy();
+              }
             }
-        })();
+
+            window.onclick = function () {
+              div = document.getElementById('page-landing');
+
+              if (!div) {
+                blipChat.destroy();           
+              }
+
+              else {
+                if (blipChat.widget==null) {
+                  blipChat.build();
+                }          
+              }
+            }
+          })();
+
     </script>                                  
 
     <noscript>You need to enable JavaScript to run this app.</noscript> 
