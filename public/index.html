@@ -51,7 +51,9 @@
               div = document.getElementById('page-landing');
 
               if (!div) {
-                blipChat.destroy();           
+                if (blipChat.widget!=null) {
+                  blipChat.destroy();
+                }           
               }
 
               else {
