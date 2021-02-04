@@ -31,7 +31,7 @@ function Profile() {
     }])
 
     const [scheduleItems, setScheduleItems] = useState([
-        { id: 0, weekday: 'Domingo', from: '', to: '', action: 1 }
+        { id: -1, weekday: 'Domingo', from: '', to: '', action: 0 }
     ])
 
     // Controle de alterações não salvas
@@ -118,12 +118,14 @@ function Profile() {
         }
     }
 
-    function handleInsertUpdate(e: FormEvent) {
+    async function handleInsertUpdate(e: FormEvent) {
         e.preventDefault()
 
-        const scheduleItemsToInsert = scheduleItems.filter(item => item.action === 0)
-        const scheduleItemsToUpdate = scheduleItems.filter(item => item.action === 1)
-        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 2)   
+        const scheduleItemsToInsert = scheduleItems.filter(item => item.action === 1)
+        const scheduleItemsToUpdate = scheduleItems.filter(item => item.action === 2)
+        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 3 && item.id !== -1)
+
+        //let novoArrayA = scheduleItemsToDelete.map(item => item.id);
 
         //Insert new items
         if(scheduleItemsToInsert.length > 0){
@@ -148,22 +150,31 @@ function Profile() {
 
         //Delete Items
         if(scheduleItemsToDelete.length > 0){
-            api.delete('schedules', {
-                data: {
-                    schedules: scheduleItemsToDelete
-                }   
-
-            }).catch(() => {
-                alert('Erro na exclusão dos itens!')
-            })
+            scheduleItemsToDelete.map(item => {
+                api.delete(
+                    'schedules', { 
+                        params: {
+                            id: item.id
+                        } 
+                    }
+                ).catch(() => {
+                    alert('Erro na exclusão do item '+item.id)
+                })
+            });      
         }
 
+        //Remover da lista itens com status 3 - exclusão
+        let refreshItems = scheduleItems.filter(item => item.action !== 3)
+
         //Atualizar status para não haver insert duplicado
-        const refreshItems = scheduleItems.map((scheduleItem:any, index: number) => {
+        refreshItems = refreshItems.map((scheduleItem:any) => {
             return {
-                ...scheduleItem, action: 1
+                ...scheduleItem, 
+                action: 0
             }
         })
+
+        console.log(refreshItems)
 
         setScheduleItems(refreshItems)
 
@@ -171,13 +182,24 @@ function Profile() {
         alert('Agenda atualizada com sucesso!')
     }
 
-    function removeScheduleItem(){
-        console.log("Removeu o item")
+    function removeScheduleItem(position:number, id:number){
+        const refreshItems = scheduleItems.map((scheduleItem:any, index: number) => {
+            if(scheduleItem.id === id) {
+                return {
+                    ...scheduleItem, 
+                    action: 3
+                }
+            }
+            return scheduleItem
+        })
+
+        setChangeItems(true)
+        setScheduleItems(refreshItems)
     }
 
     function addNewScheduleItem(){
         setScheduleItems([
-            { id: 0, weekday: '0', from: '00:00', to: '00:00', action: 0 },
+            { id: 0, weekday: '0', from: '00:00', to: '00:00', action: 1 },
             ...scheduleItems
         ])
         setChangeItems(true)
@@ -187,9 +209,18 @@ function Profile() {
         const propsItems = scheduleItems.map((scheduleItem: any, index: number) => {
             //Item percorrido igual ao item de alteração
             if(index === position) {
-                return {
-                    ...scheduleItem,
-                    [field]: value  //sobrescreve o item com o novo valor
+                if(scheduleItem.action === 1) {
+                    return {
+                        ...scheduleItem,
+                        [field]: value //sobrescreve o item com o novo valor
+                    }
+                }
+                else {
+                    return {
+                        ...scheduleItem,
+                        [field]: value, //sobrescreve o item com o novo valor
+                        action: 2
+                    }
                 }
             }
             
@@ -261,7 +292,7 @@ function Profile() {
                         className={notificationClassname} 
                         onClick={() => choseAlertData("discartChanges")}
                     >
-                        Notificações
+                        Desk
                     </button>
                 </div>
                 <div className="input-block">
@@ -306,6 +337,7 @@ function Profile() {
                         <Schedule 
                             scheduleItems={scheduleItems}
                             alterSchedule={setScheduleItemValue}
+                            removeSchedule={removeScheduleItem}
                         />
                     </form> 
                 }

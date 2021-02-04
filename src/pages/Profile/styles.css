@@ -74,14 +74,17 @@ body {
     line-height: 2.8rem;
     align-self: center;
     justify-content: space-evenly;
+    text-align: center;
 }
 
 .agenda-buttons {
-    padding: 2rem 0;
-    margin-top: 3.2rem;
+    padding: 1rem 0;
+    margin-left: 1rem;
+    margin-top: 5.2rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    margin-left: -8%;
 }
 
 .agenda-buttons button {
@@ -97,6 +100,10 @@ body {
     justify-content: space-evenly;
     transition: 0.2s;
     outline: 0;
+}
+
+.save-schedules button {
+    margin-left: 20%;
 }
 
 .agenda-buttons .new-schedule button {
@@ -163,7 +170,7 @@ body {
     }
 
     .agenda-buttons {
-        padding: 1.2rem 0;
+        padding: 0;
     }
 
     .agenda-buttons button {
