@@ -46,6 +46,10 @@
     outline: 0;
 }
 
+.removeButton button:hover {
+    background: var(--color-input-background-darker);
+}
+
 @media (min-width: 700px) {
     .schedule {
         padding-bottom: 1rem;

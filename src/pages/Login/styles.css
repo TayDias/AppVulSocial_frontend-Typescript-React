@@ -14,7 +14,7 @@
 #page-login .go-back {
     display: block;
     position: fixed;
-    top: 15px;
+    top: 0px;
 
     background-color: var(--color-primary);
     color: var(--color-text-in-primary);
@@ -96,6 +96,12 @@
     #page-login form {
         width: 80%;
         min-width: 40rem;
+        margin: 10% auto 2rem;
+    }
+
+    #page-login .go-back {
+        top: 20px;
+        padding: 0rem 0 10.6rem 0;
     }
 
 }

@@ -55,9 +55,9 @@ body {
 
 .off {
     color: var(--color-text-complement);
-    background-color: #6A994E;
+    background-color: var(--color-quaternary);
     border: 1px solid;
-    border-color: #5D8745;
+    border-color: var(--color-quaternary-dark);
 }
 
 #page-profile main {
@@ -69,12 +69,45 @@ body {
     position: flex;
     color: var(--color-text-base);
     max-width: 100%;
-    padding: 25% 25% 25% 25%;
+    padding: 25% 25% 15% 25%;
     font: 500 1.6rem Ubuntu;
     line-height: 2.8rem;
     align-self: center;
     justify-content: space-evenly;
     text-align: center;
+}
+
+.open-blip-desk {
+    padding: 1rem 0;
+    margin-left: 1rem;
+    margin-top: 5.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -8%;
+    padding-bottom: 5rem;
+}
+
+.open-blip-desk button {
+    width: 32rem;
+    height: 5.6rem;
+    border: 0;
+    border-radius: 3rem;
+    cursor: pointer;
+    font: 700 1.6rem Ubuntu;
+    transition: 0.2s;
+    outline: 0;
+
+    background: var(--color-tertiary);
+    color: var(--color-button-text);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.open-blip-desk button:hover {
+    background: var(--color-tertiary-dark);
 }
 
 .agenda-buttons {
@@ -122,6 +155,18 @@ body {
     background: var(--color-secondary-dark);
 }
 
+#page-profile main .without-schedules {
+    position: flex;
+    color: var(--color-text-base);
+    max-width: 100%;
+    padding: 13% 25% 15% 25%;
+    font: 500 1.6rem Ubuntu;
+    line-height: 2.8rem;
+    align-self: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
 @media (min-width: 700px) {
     #page-profile {
         max-width: 100%;
@@ -164,7 +209,7 @@ body {
 
     #page-profile main .without-notifications {
         max-width: 100%;
-        padding: 25% 25% 25% 25%;
+        padding: 25% 25% 13% 25%;
         align-self: center;
 
     }

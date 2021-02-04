@@ -47,8 +47,8 @@
 }
 
 .page-header .header-content strong {
-    font: 700 3.2rem Ubuntu;
-    line-height: 4.2rem;
+    font: 700 2.6rem Ubuntu;
+    line-height: 3.2rem;
     color: var(--color-title-in-primary);
 }
 
@@ -82,6 +82,9 @@
 
     .page-header .header-content strong {
         max-width: 600px;
+        font: 700 3.2rem Ubuntu;
+        line-height: 4.2rem;
+        color: var(--color-title-in-primary);
     }
 
 }

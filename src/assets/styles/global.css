@@ -18,12 +18,15 @@
      --color-text-base: #505050;
     --color-line-in-white: #E6E6F0;
      --color-input-background: #F8F8FC;
+     --color-input-background-darker: #f0f0f5;
      --color-input: #414141;
      --color-button-text: #FFFFFF;
     --color-box-base: #FFFFFF;
     --color-box-footer: #FAFAFC;
     --color-chat-background: #ececec;
     --color-chat-message: #fcfcfc;
+    --color-quaternary: #6A994E;
+    --color-quaternary-dark: #5D8745;
 
 }
 

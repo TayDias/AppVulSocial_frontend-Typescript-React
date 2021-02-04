@@ -95,8 +95,8 @@ function Profile() {
         history.push('/')
     }
 
-    function handleOpenChat() {
-        history.push('/chat')
+    function handleOpenBlipDesk() {
+        window.open("https://desk.blip.ai")
     }
 
     function choseAlertData(option: string) {
@@ -123,7 +123,7 @@ function Profile() {
 
         const scheduleItemsToInsert = scheduleItems.filter(item => item.action === 1)
         const scheduleItemsToUpdate = scheduleItems.filter(item => item.action === 2)
-        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 3 && item.id !== -1)
+        const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 3 && item.id > 0)
 
         //let novoArrayA = scheduleItemsToDelete.map(item => item.id);
 
@@ -199,7 +199,7 @@ function Profile() {
 
     function addNewScheduleItem(){
         setScheduleItems([
-            { id: 0, weekday: '0', from: '00:00', to: '00:00', action: 1 },
+            { id: -1, weekday: '0', from: '00:00', to: '00:00', action: 1 },
             ...scheduleItems
         ])
         setChangeItems(true)
@@ -313,7 +313,7 @@ function Profile() {
                         { notificationItems[0] ?
                             <Notification 
                                 notificationItems={notificationItems}
-                                openChat={handleOpenChat}
+                                openChat={handleOpenBlipDesk}
                             />
                             :
                             <div>
@@ -322,6 +322,11 @@ function Profile() {
                                 </p>             
                             </div>
                         }
+
+                        <div className="open-blip-desk">
+                            <button type="button" onClick={handleOpenBlipDesk}>Acessar o BLIP DESK</button>
+                        </div>
+
                     </div>
                     :
                     <form onSubmit={handleInsertUpdate}> 
@@ -329,10 +334,23 @@ function Profile() {
                             <div className="new-schedule">
                                 <button type="button" onClick={addNewScheduleItem}>Incluir Novo</button>
                             </div>
-                            <div className="save-schedules">
-                                <button type="submit" >Salvar Alterações</button>
+
+                            { scheduleItems[0] ?
+                                <div className="save-schedules">
+                                    <button type="submit" >Salvar Alterações</button>
+                                </div>
+                            : null
+                            }
+                        </div>
+
+                        { !scheduleItems[0] ?
+                            <div>
+                                <p className="without-schedules">
+                                    Nenhum horário de atendimento cadastrado.
+                                </p>             
                             </div>
-                        </div> 
+                        : null
+                        }
 
                         <Schedule 
                             scheduleItems={scheduleItems}
