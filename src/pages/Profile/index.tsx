@@ -50,7 +50,8 @@ function Profile() {
         title: "Atenção!",
         descripton: "Deseja mesmo encerrar sua sessão?",
         optionOne: "Permanecer",
-        optionTwo: "Encerrar Agora"
+        optionTwo: "Encerrar Agora",
+        type: "choose"
     })
 
     const [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
@@ -60,12 +61,14 @@ function Profile() {
         if(rescuer_id) {
             loadUserInformation()
             loadNotifications()
+            handleFirstAccessMessage()
         }
         else {
             alert("É necessário fazer o login para acessar seu perfil.")
             history.push('/login')
         }
-    }, [])
+
+    }, [history, rescuer_id])
 
     async function handleOpenAlert() {
         changeAlertDialogStatus(true)
@@ -79,7 +82,8 @@ function Profile() {
             title: "Atenção!",
             descripton: "Deseja mesmo encerrar sua sessão?",
             optionOne: "Permanecer",
-            optionTwo: "Encerrar Agora"
+            optionTwo: "Encerrar Agora",
+            type: "choose"
         })
         changeAlertOnAcceptFunction(() => handleLogout)
     }
@@ -99,23 +103,53 @@ function Profile() {
         window.open("https://desk.blip.ai")
     }
 
+    function handleFirstAccessMessage() {
+        const addBlip = localStorage.getItem('addBlip')
+        const primeiroAcesso = localStorage.getItem('primeiroAcesso')
+
+        if(addBlip?.toString().match("sim") && primeiroAcesso?.toString().match(userData.email)){
+            choseAlertData("firstAccess")
+        }
+
+        localStorage.removeItem('addBlip')
+        localStorage.removeItem('primeiroAcesso')
+    }
+
     function choseAlertData(option: string) {
-        if(changeItems) {
-            if(option === "discartChanges") {
+        if(option === "discartChanges") {
+            if(changeItems) {
                 changeAlertData({
                     title: "Atenção!",
                     descripton: "Notei que você não salvou as alterações feitas na agenda, deseja mesmo descarta-las?",
                     optionOne: "Permanecer na agenda",
-                    optionTwo: "Descartar alterações"
+                    optionTwo: "Descartar alterações",
+                    type: "choose"
                 })
+
                 changeAlertOnAcceptFunction(() => handleContinueAction)
+                handleOpenAlert()
             }
+            else {
+                handleContinueAction()
+            }
+        
+        }       
+
+        if (option === "firstAccess"){
+            changeAlertData({
+                title: "Bem vindo(a)!",
+                descripton: "Olá :) Notei que esse é o seu primeiro acesso ao seu perfil. " + 
+                    "Para atender os que buscam ajuda você precisa concluir o cadastro na plataforma Blip Desk, " +
+                    " por isso enviei o link de confirmação de cadastro ao seu e-mail. "+ 
+                    "Após se cadastrar por lá, você pode sempre acessar o local de atendimento direto por aqui, " + 
+                    " pelo botão 'Acessar o Blip Desk'.",
+                optionOne: "Ok!",
+                optionTwo: '',
+                type: "confirm"
+            })
 
             handleOpenAlert()
-        }
-        else {
-            handleContinueAction()
-        }
+        }   
     }
 
     async function handleInsertUpdate(e: FormEvent) {
@@ -124,8 +158,6 @@ function Profile() {
         const scheduleItemsToInsert = scheduleItems.filter(item => item.action === 1)
         const scheduleItemsToUpdate = scheduleItems.filter(item => item.action === 2)
         const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 3 && item.id > 0)
-
-        //let novoArrayA = scheduleItemsToDelete.map(item => item.id);
 
         //Insert new items
         if(scheduleItemsToInsert.length > 0){

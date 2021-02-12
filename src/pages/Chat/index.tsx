@@ -17,7 +17,8 @@ function Chat() {
     title: "Atenção!",
     descripton: "Deseja mesmo encerrar essa conversa?",
     optionOne: "Permanecer",
-    optionTwo: "Encerrar Agora"
+    optionTwo: "Encerrar Agora",
+    type: "choose"
   }
 
   async function sendMessage() {

@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from "react"
+import React, { InputHTMLAttributes, useEffect } from "react"
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core"
 
 import './styles.css'
@@ -9,12 +9,14 @@ interface AlertProps extends InputHTMLAttributes<HTMLInputElement> {
         descripton: string,
         optionOne: string,
         optionTwo: string,
+        type: string,
     },
     isOpen: boolean,
-    onAccept: any
+    onAccept: any,
     onClose: any
 }
 
+/* eslint-disable */
 const AlertDialog: React.FC<AlertProps> = ( props ) => { 
     function handleAgree () {
         props.onAccept()
@@ -43,14 +45,22 @@ const AlertDialog: React.FC<AlertProps> = ( props ) => {
                         </DialogContentText>
                     </DialogContent>
 
-                    <DialogActions className="alert-actions">
-                        <button onClick={handleDisagree} className="decline">
-                            {props.alertProps.optionOne}
-                        </button>
-                        <button onClick={handleAgree} className="confirm">
-                            {props.alertProps.optionTwo}
-                        </button>
-                    </DialogActions>
+                    { props.alertProps.type === "choose" ? 
+                        <DialogActions className="alert-actions">
+                            <button onClick={handleDisagree} className="decline">
+                                {props.alertProps.optionOne}
+                            </button>
+                            <button onClick={handleAgree} className="confirm">
+                                {props.alertProps.optionTwo}
+                            </button>
+                        </DialogActions>
+                        :
+                        <DialogActions className="alert-actions">
+                            <button onClick={handleDisagree} className="decline">
+                                {props.alertProps.optionOne}
+                            </button>
+                        </DialogActions>
+                    }
                 </div>    
             </Dialog>         
         </div>

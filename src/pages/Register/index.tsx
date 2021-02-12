@@ -1,15 +1,17 @@
 import React, { useState, FormEvent } from 'react'
 import { useHistory } from 'react-router'
 
+import api from '../../services/api'
+import blipApi from '../../services/blipApi'
+
 import PageHeader from '../../components/PageHeader'
 import StyledInput from '../../components/StyledInput'
 import StyledTextArea from '../../components/StyledTextArea'
 import StyledSelect from '../../components/StyledSelect'
+import uuidv4 from '../../utils/generateUuidv4'
+import warningIcon from '../../assets/images/icons/warning.svg'
 
 import './styles.css'
-
-import warningIcon from '../../assets/images/icons/warning.svg'
-import api from '../../services/api'
 
 function Register() {
     const history = useHistory()
@@ -49,11 +51,13 @@ function Register() {
         setScheduleItems(updatedScheduleItems)
     }
 
-    function handleRegister(e: FormEvent) {
+    async function handleRegister(e: FormEvent) {
         e.preventDefault()
 
+        let successful = false
+
         if(password === confirmPassword){
-            api.post('rescuers', {
+            await api.post('rescuers', {
                 name,
                 phone,
                 bio,
@@ -62,9 +66,9 @@ function Register() {
                 specialty_id,
                 schedules: scheduleItems
             }).then(() => {
+                successful = true
                 alert('Cadastro realizado com sucesso')
 
-                history.push('/')
             }).catch(() => {
                 alert('Erro no cadastro!')
             })
@@ -74,6 +78,44 @@ function Register() {
             alert('As senha não confere com a confirmação da senha')
         }
 
+        if(successful) {
+            handleBlipAddAgent()
+        }
+        else {
+            history.push('/')
+        }
+
+    }
+
+    async function handleBlipAddAgent() {
+        let identity = email.replace('@', '%40').concat('@blip.ai')
+        let id = uuidv4()
+
+        await blipApi.post('', {
+            id: id,
+            to: "postmaster@desk.msging.net",
+            method: "set",         
+            uri: "/attendants",
+            type: "application/vnd.iris.desk.attendant+json",
+            resource: {
+                identity: identity,
+                email: email,
+                teams: [
+                    "Default"
+                ]
+            }          
+
+        }).then(() => {
+            localStorage.setItem('addBlip', 'sim')
+            localStorage.setItem('primeiroAcesso', email)
+
+        }).catch(() => {
+            localStorage.setItem('addBlip', 'não')
+            alert('Erro')
+
+         })
+
+         history.push('/')
     }
 
     return (
@@ -127,9 +169,10 @@ function Register() {
                             value={specialty_id}
                             onChange={(e) => setSpecialtyId(e.target.value)}
                             options={[
-                                {id: '1', value: '1', label: 'Assitencia Social'},
+                                {id: '1', value: '1', label: 'Assitência Social'},
                                 {id: '2', value: '2', label: 'Pedagogia'},
                                 {id: '3', value: '3', label: 'Psicologia'},
+                                {id: '4', value: '4', label: 'Outra'}
                             ]}
                         />
                     </fieldset>

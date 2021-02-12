@@ -81,7 +81,7 @@ body {
     justify-content: center;
     font-size: 1.4rem;
     line-height: 2.4rem;
-    color: var(--color-text-complement)
+    color: var(--color-text-title);
 }
 
 #page-register main footer p img {
