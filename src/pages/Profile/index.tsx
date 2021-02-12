@@ -138,11 +138,11 @@ function Profile() {
         if (option === "firstAccess"){
             changeAlertData({
                 title: "Bem vindo(a)!",
-                descripton: "Olá :) Notei que esse é o seu primeiro acesso ao seu perfil. " + 
-                    "Para atender os que buscam ajuda você precisa concluir o cadastro na plataforma Blip Desk, " +
-                    " por isso enviei o link de confirmação de cadastro ao seu e-mail. "+ 
-                    "Após se cadastrar por lá, você pode sempre acessar o local de atendimento direto por aqui, " + 
-                    " pelo botão 'Acessar o Blip Desk'.",
+                descripton: "Olá :-) Notei que esse é o seu primeiro acesso ao seu perfil. " + 
+                    "Para atender os que buscam ajuda você precisa ter um cadastro na plataforma Blip Desk. " +
+                    "Por isso, caso não tenha, enviei um link de conclusão de cadastro para o seu e-mail. "+ 
+                    "Após se cadastrar por lá, você pode sempre ir direto para o local de atendimento por aqui, " + 
+                    "no botão 'Acessar o Blip Desk'. Está Ok? ;-)",
                 optionOne: "Ok!",
                 optionTwo: '',
                 type: "confirm"

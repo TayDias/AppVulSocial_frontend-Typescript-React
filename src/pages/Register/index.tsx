@@ -111,7 +111,6 @@ function Register() {
 
         }).catch(() => {
             localStorage.setItem('addBlip', 'não')
-            alert('Erro')
 
          })
 
