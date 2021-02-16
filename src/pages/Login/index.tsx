@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useHistory } from 'react-router'
 
 import { login } from '../../services/auth'
+import AlertDialog from '../../components/AlertDialog'
 import api from '../../services/api'
 
 import backIcon from '../../assets/images/icons/back-white.svg'
@@ -15,6 +16,47 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [alertData, changeAlertData]  = useState({
+        title: "",
+        descripton: "",
+        optionOne: "",
+        optionTwo: "",
+        type: ""
+    })
+    
+    const [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
+
+    /* FUNÇOES EXCLUSIVAS DE CONTROLE DA INTERFACE */
+    async function handleOpenAlert() {
+        changeAlertDialogStatus(true)
+    }
+    
+    async function handleCloseAlert () {
+        changeAlertDialogStatus(false)
+    }
+
+    function choseAlertData(option: string) {
+        if (option === "wrongUser"){
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Sinto muito, este espaço é reservado para a rede de atendimento. No futuro a rede de vulneráveis terá um espaço aqui só para si!",
+                optionOne: "Ok",
+                optionTwo: "",
+                type: "confirm"
+            })
+        }
+        if (option === "error"){
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Ocorreu um erro ao na tentativa de fazer o login. Por favor, verifique suas credenciais e tente novamente.",
+                optionOne: "Ok!",
+                optionTwo: "",
+                type: "confirm"
+            })
+        }  
+    }
+
+    /* FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS */
     async function handleLogin(e: FormEvent) {
         e.preventDefault()
 
@@ -22,7 +64,8 @@ function Login() {
             const response = await api.post('/login', { email, password })
 
             if (!response.data.isRescuer) {
-                alert('Este espaço é reservado para a rede de atendimento, no futuro a rede de vulneráveis  terá um espaço só para si!')
+                choseAlertData("wrongUser")
+                handleOpenAlert()
 
             }
 
@@ -35,12 +78,21 @@ function Login() {
             
         } 
         catch (err) {
-            alert('Houve um problema ao realizar o login, verifique suas credenciais.')
+            choseAlertData("error")
+            handleOpenAlert()
+
         }
     }
 
     return (
         <div id="page-login" className="container">
+            <AlertDialog 
+                alertProps = {alertData}
+                isOpen = {alertDialogIsOpen}
+                onAccept= {() => {}}
+                onClose= {handleCloseAlert}
+            />
+
             <div className="go-back">
                 <Link to="/">
                     <img src={backIcon} alt="Voltar" />

@@ -47,45 +47,32 @@ function Profile() {
 
     // Defaut alert props
     const [alertData, changeAlertData]  = useState({
-        title: "Atenção!",
-        descripton: "Deseja mesmo encerrar sua sessão?",
-        optionOne: "Permanecer",
-        optionTwo: "Encerrar Agora",
-        type: "choose"
+        title: "",
+        descripton: "",
+        optionOne: "",
+        optionTwo: "",
+        type: ""
     })
 
+    // Variaveis de controle da msg de alerta
     const [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
-    const [alertOnAcceptFunction, changeAlertOnAcceptFunction] = useState(() => handleLogout)
+    const [alertOnAcceptFunction, changeAlertOnAcceptFunction] = useState(() => handleAcceptedLogout)
 
-    useEffect(() => {
-        if(rescuer_id) {
-            loadUserInformation()
-            loadNotifications()
-            handleFirstAccessMessage()
-        }
-        else {
-            alert("É necessário fazer o login para acessar seu perfil.")
-            history.push('/login')
-        }
-
-    }, [history, rescuer_id])
-
-    async function handleOpenAlert() {
-        changeAlertDialogStatus(true)
-    }
     
-    async function handleCloseAlert () {
-        changeAlertDialogStatus(false)
-
-        // Volta para a defaut - É gambiarra mesmo :P
-        changeAlertData({
-            title: "Atenção!",
-            descripton: "Deseja mesmo encerrar sua sessão?",
-            optionOne: "Permanecer",
-            optionTwo: "Encerrar Agora",
-            type: "choose"
-        })
-        changeAlertOnAcceptFunction(() => handleLogout)
+    // FUNÇOES EXCLUSIVAS DE CONTROLE DA INTERFACE //
+    function changeMenuOption(id: string) {
+        if(id === "agenda") {
+            loadSchedules()
+            setMenuOption("agenda")
+            setAgendaClassname("on")
+            setNotificationClassname("off")         
+        }
+        else if (id === "notification") {
+            loadNotifications()
+            setMenuOption("notification")
+            setAgendaClassname("off")
+            setNotificationClassname("on")
+        }
     }
 
     async function handleContinueAction() {
@@ -93,8 +80,12 @@ function Profile() {
         setChangeItems(false)
     }
 
-    // Defaut alert function
     async function handleLogout() {
+        choseAlertData("logout")
+        handleOpenAlert()
+    }
+
+    async function handleAcceptedLogout() {
         logout()
         history.push('/')
     }
@@ -102,13 +93,34 @@ function Profile() {
     function handleOpenBlipDesk() {
         window.open("https://desk.blip.ai")
     }
+    
+    // FUNÇOES DE GERENCIAMENTO DE MENSAGEM DE ALERTA //
+    useEffect(() => {
+        if(alertDialogIsOpen){
+            if(alertData.type === 'visualize'){
+                setTimeout(()=>{
+                    handleCloseAlert()
+                }, 2500)    //tempo de permanencia do alerta na tela
+            }
+        }
 
-    function handleFirstAccessMessage() {
+    }, [alertDialogIsOpen]) 
+
+    async function handleOpenAlert() {
+        changeAlertDialogStatus(true)
+    }
+    
+    async function handleCloseAlert () {
+        changeAlertDialogStatus(false)
+    }
+
+   function handleFirstAccessMessage() {
         const addBlip = localStorage.getItem('addBlip')
         const primeiroAcesso = localStorage.getItem('primeiroAcesso')
 
         if(addBlip?.toString().match("sim") && primeiroAcesso?.toString().match(userData.email)){
             choseAlertData("firstAccess")
+            handleOpenAlert()
         }
 
         localStorage.removeItem('addBlip')
@@ -134,8 +146,7 @@ function Profile() {
             }
         
         }       
-
-        if (option === "firstAccess"){
+        else if (option === "firstAccess"){
             changeAlertData({
                 title: "Bem vindo(a)!",
                 descripton: "Olá :-) Notei que esse é o seu primeiro acesso ao seu perfil. " + 
@@ -148,9 +159,46 @@ function Profile() {
                 type: "confirm"
             })
 
-            handleOpenAlert()
-        }   
+            //Sem função de ação
+        }
+        else if(option === "logout") {
+            changeAlertData({
+                title: "Atenção!",
+                descripton: "Deseja mesmo encerrar sua sessão?",
+                optionOne: "Permanecer",
+                optionTwo: "Encerrar Agora",
+                type: "choose"
+            })
+     
+            changeAlertOnAcceptFunction(() => handleAcceptedLogout)
+        }
+
+        else if (option === "registered"){
+            changeAlertData({
+                title: "Sucesso",
+                descripton: "Agenda atualizada com sucesso!",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+
+            //Sem função de ação
+        }
     }
+
+    // FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS - CRUD //
+    useEffect(() => {
+        if(rescuer_id) {
+            loadUserInformation()
+            loadNotifications()
+            handleFirstAccessMessage()
+        }
+        else {
+            alert("É necessário fazer o login para acessar seu perfil.")
+            history.push('/login')
+        }
+
+    }, [history, rescuer_id])
 
     async function handleInsertUpdate(e: FormEvent) {
         e.preventDefault()
@@ -165,7 +213,7 @@ function Profile() {
                 rescuer_id,
                 schedules: scheduleItemsToInsert
             }).catch(() => {
-                alert('Erro na insersão de novos itens!')
+                console.log('Erro na insersão de novos itens!')
             })
         }
 
@@ -176,7 +224,7 @@ function Profile() {
                 schedules: scheduleItemsToUpdate
 
             }).catch(() => {
-                alert('Erro na alteração dos itens!')
+                console.log('Erro na alteração dos itens!')
             })
         }
 
@@ -190,7 +238,7 @@ function Profile() {
                         } 
                     }
                 ).catch(() => {
-                    alert('Erro na exclusão do item '+item.id)
+                    console.log('Erro na exclusão do item '+item.id)
                 })
             });      
         }
@@ -206,14 +254,37 @@ function Profile() {
             }
         })
 
-        console.log(refreshItems)
-
         setScheduleItems(refreshItems)
-
         setChangeItems(false)
-        alert('Agenda atualizada com sucesso!')
+
+        choseAlertData("registered")
+        handleOpenAlert()
     }
 
+    async function loadNotifications() {
+        const response = await api.get('assistance')
+
+        setNotificationItems(response.data)
+    }
+
+    async function loadSchedules() {
+        const response = await api.get('schedules', {
+            params: {
+                rescuer_id,
+            }
+        })
+    
+        setScheduleItems(response.data)
+    }
+
+    async function loadUserInformation() {
+        let id = rescuer_id
+        const response = await api.get(`rescuers/${id}`)
+
+        setUserData(response.data)
+    }
+
+    // FUNÇOES DE CONTROLE DE DADOS NA INTERFACE //
     function removeScheduleItem(position:number, id:number){
         const refreshItems = scheduleItems.map((scheduleItem:any, index: number) => {
             if(scheduleItem.id === id) {
@@ -263,44 +334,6 @@ function Profile() {
         setScheduleItems(propsItems)
     }
 
-    async function loadNotifications() {
-        const response = await api.get('assistance')
-
-        setNotificationItems(response.data)
-    }
-
-    async function loadSchedules() {
-        const response = await api.get('schedules', {
-            params: {
-                rescuer_id,
-            }
-        })
-    
-        setScheduleItems(response.data)
-    }
-
-    async function loadUserInformation() {
-        let id = rescuer_id
-        const response = await api.get(`rescuers/${id}`)
-
-        setUserData(response.data)
-    }
-
-    function changeMenuOption(id: string) {
-        if(id === "agenda") {
-            loadSchedules()
-            setMenuOption("agenda")
-            setAgendaClassname("on")
-            setNotificationClassname("off")         
-        }
-        else if (id === "notification") {
-            loadNotifications()
-            setMenuOption("notification")
-            setAgendaClassname("off")
-            setNotificationClassname("on")
-        }
-    }
-
     return (
         <div id="page-profile" className="container">
             <AlertDialog 
@@ -313,7 +346,7 @@ function Profile() {
             <PageHeader 
                 title={`Olá ${userData.name}, que bom que você está aqui agora!`}
                 description="Você pode ver aqui quem está precisando de ajuda  e organizar sua agenda."
-                logout={handleOpenAlert}
+                logout={handleLogout}
             />
 
             <form id="menu-items">

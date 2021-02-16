@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react'
+import React, { useState, FormEvent, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
 import api from '../../services/api'
@@ -8,11 +8,13 @@ import PageHeader from '../../components/PageHeader'
 import StyledInput from '../../components/StyledInput'
 import StyledTextArea from '../../components/StyledTextArea'
 import StyledSelect from '../../components/StyledSelect'
+import AlertDialog from '../../components/AlertDialog'
 import uuidv4 from '../../utils/generateUuidv4'
 import warningIcon from '../../assets/images/icons/warning.svg'
 
 import './styles.css'
 
+/* eslint-disable */
 function Register() {
     const history = useHistory()
 
@@ -20,18 +22,88 @@ function Register() {
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [bio, setBio] = useState('')
-    const [specialty_id, setSpecialtyId] = useState('')
+    const [specialty_id, setSpecialtyId] = useState('1')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const [scheduleItems, setScheduleItems] = useState([
-        { weekday: 'Domingo', from: '', to: '' }
+        { weekday: 'Domingo', from: '00:00', to: '00:00' }
     ])
 
+    // FUNÇOES DE GERENCIAMENTO DE MENSAGEM DE ALERTA //
+    const [alertData, changeAlertData]  = useState({
+        title: "",
+        descripton: "",
+        optionOne: "",
+        optionTwo: "",
+        type: ""
+    })
+    
+    const [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
+
+    useEffect(() => {
+        if(alertDialogIsOpen){
+            if(alertData.type === 'visualize'){
+                setTimeout(()=>{
+                    handleCloseAlert()
+                }, 2500)    //tempo de permanencia do alerta na tela
+            }
+        }
+
+    }, [alertDialogIsOpen]) 
+
+    function choseAlertData(option: string) {
+        if (option === "success"){
+            changeAlertData({
+                title: "Bem vindo(a) a nossa rede!",
+                descripton: "Seu cadastro foi realizado com sucesso.",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+        else if (option === "error"){
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Ocorreu um erro ao fazer o cadastro. Por favor, verifique se os seus dados estão corretos.",
+                optionOne: "Ok!",
+                optionTwo: "",
+                type: "confirm"
+            })
+        }  
+        else if (option === "incomplete"){
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Por favor, preencha todos os dados antes de salvar",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        } 
+        else if (option === "password"){
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Os campos senha e confirmação da senha não conferem.",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }  
+    }
+
+    async function handleOpenAlert() {
+        changeAlertDialogStatus(true)
+    }
+    
+    async function handleCloseAlert () {
+        changeAlertDialogStatus(false)
+    }
+
+    // FUNÇOES DE CONTROLE DE DADOS NA INTERFACE //
     function addNewScheduleItem(){
         setScheduleItems([
             ...scheduleItems,
-            { weekday: 'Domingo', from: '', to: '' }
+            { weekday: 'Domingo', from: '00:00', to: '00:00' }
         ])
     }
 
@@ -51,43 +123,54 @@ function Register() {
         setScheduleItems(updatedScheduleItems)
     }
 
+    // FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS E API TERCEIRA //
     async function handleRegister(e: FormEvent) {
         e.preventDefault()
 
         let successful = false
 
-        if(password === confirmPassword){
-            await api.post('rescuers', {
-                name,
-                phone,
-                bio,
-                email,
-                password,
-                specialty_id,
-                schedules: scheduleItems
-            }).then(() => {
-                successful = true
-                alert('Cadastro realizado com sucesso')
-
-            }).catch(() => {
-                alert('Erro no cadastro!')
-            })
+        if(name.length === 0 || phone.length === 0 || email.length === 0 || password.length === 0 || confirmPassword.length === 0 || scheduleItems.length === 0) {
+            choseAlertData('incomplete')
+            handleOpenAlert()
         }
+        else{   
+            if(password === confirmPassword){
+                await api.post('rescuers', {
+                    name,
+                    phone,
+                    bio,
+                    email,
+                    password,
+                    specialty_id,
+                    schedules: scheduleItems
+                }).then(() => {
+                    successful = true
+                    choseAlertData('success')
+                    handleOpenAlert()
 
-        else {
-            alert('As senha não confere com a confirmação da senha')
+                }).catch(() => {
+                    choseAlertData('error')
+                    handleOpenAlert()
+                })
+            }
+
+            else {
+                choseAlertData('password')
+                handleOpenAlert()
+            }
         }
 
         if(successful) {
-            handleBlipAddAgent()
-        }
-        else {
-            history.push('/')
+            handleCreateBlipAddAgent()
+
+            setTimeout(()=>{
+                history.push('/')
+            }, 3000)
         }
 
     }
 
-    async function handleBlipAddAgent() {
+    async function handleCreateBlipAddAgent() {
         let identity = email.replace('@', '%40').concat('@blip.ai')
         let id = uuidv4()
 
@@ -114,11 +197,17 @@ function Register() {
 
          })
 
-         history.push('/')
     }
 
     return (
         <div id="page-register" className="container">
+            <AlertDialog 
+                alertProps = {alertData}
+                isOpen = {alertDialogIsOpen}
+                onAccept= {() => {}}
+                onClose= {handleCloseAlert}
+            />
+
             <PageHeader 
                 title='Que incrível que você quer ajudar.' 
                 description="O primeiro passo, é preencher esse formulário de inscrição."
@@ -202,7 +291,7 @@ function Register() {
 
                     <fieldset>
                         <legend>
-                            Horários Disponíveis
+                            Horários de atendimento
                             <button type="button" onClick={addNewScheduleItem}>
                                 + Novo Horário
                             </button>

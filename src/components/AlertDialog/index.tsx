@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useEffect } from "react"
+import React, { InputHTMLAttributes } from "react"
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core"
 
 import './styles.css'
@@ -54,12 +54,14 @@ const AlertDialog: React.FC<AlertProps> = ( props ) => {
                                 {props.alertProps.optionTwo}
                             </button>
                         </DialogActions>
-                        :
+
+                    : props.alertProps.type === "confirm" ?
                         <DialogActions className="alert-actions">
                             <button onClick={handleDisagree} className="decline">
                                 {props.alertProps.optionOne}
                             </button>
                         </DialogActions>
+                    : null
                     }
                 </div>    
             </Dialog>         
