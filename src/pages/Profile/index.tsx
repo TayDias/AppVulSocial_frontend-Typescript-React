@@ -3,6 +3,8 @@ import { useHistory } from 'react-router'
 
 import PageHeader from '../../components/PageHeader'
 import Notification from '../../components/Notification'
+import Help from '../../components/FAQ'
+import HelpDesk from '../../components/FAQDesk'
 import Schedule from '../../components/Schedule'
 import AlertDialog from '../../components/AlertDialog'
 
@@ -18,16 +20,35 @@ function Profile() {
     const [menuOption, setMenuOption] = useState("notification")
     const [agendaClassname, setAgendaClassname] = useState("off")
     const [notificationClassname, setNotificationClassname] = useState("on")
+    const [helpClassname, setHelpClassname] = useState("off")
 
-    const [notificationItems, setNotificationItems] = useState([{ 
+    const [notificationItems, setNotificationItems] = useState([{
         id: 0,
         protocol: 'none',
         status: 0,
         preview: '',
         accessLink: '',
-        vulnerable_id: 0, 
+        vulnerable_id: 0,
         vulnerable_nickname: '',
         vulnerable_fullname: ''
+    }])
+
+    const [helpItems, setHelpItems] = useState([{
+        id: 0,
+        url: '',
+        title: '',
+        desc: '',
+        text: '',
+        location: ''
+    }])
+
+    const [helpdeskItems, setHelpDeskItems] = useState([{
+        id: 0,
+        url: '',
+        title: '',
+        desc: '',
+        text: '',
+        location: ''
     }])
 
     const [scheduleItems, setScheduleItems] = useState([
@@ -46,7 +67,7 @@ function Profile() {
     })
 
     // Defaut alert props
-    const [alertData, changeAlertData]  = useState({
+    const [alertData, changeAlertData] = useState({
         title: "",
         descripton: "",
         optionOne: "",
@@ -55,23 +76,33 @@ function Profile() {
     })
 
     // Variaveis de controle da msg de alerta
-    const [alertDialogIsOpen, changeAlertDialogStatus ] = useState(false)
+    const [alertDialogIsOpen, changeAlertDialogStatus] = useState(false)
     const [alertOnAcceptFunction, changeAlertOnAcceptFunction] = useState(() => handleAcceptedLogout)
 
-    
+
     // FUNÇOES EXCLUSIVAS DE CONTROLE DA INTERFACE //
     function changeMenuOption(id: string) {
-        if(id === "agenda") {
+        if (id === "agenda") {
             loadSchedules()
             setMenuOption("agenda")
             setAgendaClassname("on")
-            setNotificationClassname("off")         
+            setHelpClassname("off")
+            setNotificationClassname("off")
         }
-        else if (id === "notification") {
+        if (id === "notification") {
             loadNotifications()
+            loadHelp("Desk")
             setMenuOption("notification")
             setAgendaClassname("off")
+            setHelpClassname("off")
             setNotificationClassname("on")
+        }
+        if (id === "help") {
+            loadHelp("FAQ")
+            setMenuOption("help")
+            setAgendaClassname("off")
+            setHelpClassname("on")
+            setNotificationClassname("off")
         }
     }
 
@@ -93,32 +124,32 @@ function Profile() {
     function handleOpenBlipDesk() {
         window.open("https://desk.blip.ai")
     }
-    
+
     // FUNÇOES DE GERENCIAMENTO DE MENSAGEM DE ALERTA //
     useEffect(() => {
-        if(alertDialogIsOpen){
-            if(alertData.type === 'visualize'){
-                setTimeout(()=>{
+        if (alertDialogIsOpen) {
+            if (alertData.type === 'visualize') {
+                setTimeout(() => {
                     handleCloseAlert()
                 }, 2500)    //tempo de permanencia do alerta na tela
             }
         }
 
-    }, [alertDialogIsOpen]) 
+    }, [alertDialogIsOpen])
 
     async function handleOpenAlert() {
         changeAlertDialogStatus(true)
     }
-    
-    async function handleCloseAlert () {
+
+    async function handleCloseAlert() {
         changeAlertDialogStatus(false)
     }
 
-   function handleFirstAccessMessage() {
+    function handleFirstAccessMessage() {
         const addBlip = localStorage.getItem('addBlip')
         const primeiroAcesso = localStorage.getItem('primeiroAcesso')
 
-        if(addBlip?.toString().match("sim") && primeiroAcesso?.toString().match(userData.email)){
+        if (addBlip?.toString().match("sim") && primeiroAcesso?.toString().match(userData.email)) {
             choseAlertData("firstAccess")
             handleOpenAlert()
         }
@@ -128,8 +159,8 @@ function Profile() {
     }
 
     function choseAlertData(option: string) {
-        if(option === "discartChanges") {
-            if(changeItems) {
+        if (option === "discartChanges") {
+            if (changeItems) {
                 changeAlertData({
                     title: "Atenção!",
                     descripton: "Notei que você não salvou as alterações feitas na agenda, deseja mesmo descarta-las?",
@@ -144,15 +175,15 @@ function Profile() {
             else {
                 handleContinueAction()
             }
-        
-        }       
-        else if (option === "firstAccess"){
+
+        }
+        else if (option === "firstAccess") {
             changeAlertData({
                 title: "Bem vindo(a)!",
-                descripton: "Olá :-) Notei que esse é o seu primeiro acesso ao seu perfil. " + 
+                descripton: "Olá :-) Notei que esse é o seu primeiro acesso ao seu perfil. " +
                     "Para atender os que buscam ajuda você precisa ter um cadastro na plataforma Blip Desk. " +
-                    "Por isso, caso não tenha, enviei um link de conclusão de cadastro para o seu e-mail. "+ 
-                    "Após se cadastrar por lá, você pode sempre ir direto para o local de atendimento por aqui, " + 
+                    "Por isso, caso não tenha, enviei um link de conclusão de cadastro para o seu e-mail. " +
+                    "Após se cadastrar por lá, você pode sempre ir direto para o local de atendimento por aqui, " +
                     "no botão 'Acessar o Blip Desk'. Está Ok? ;-)",
                 optionOne: "Ok!",
                 optionTwo: '',
@@ -161,7 +192,7 @@ function Profile() {
 
             //Sem função de ação
         }
-        else if(option === "logout") {
+        else if (option === "logout") {
             changeAlertData({
                 title: "Atenção!",
                 descripton: "Deseja mesmo encerrar sua sessão?",
@@ -169,11 +200,11 @@ function Profile() {
                 optionTwo: "Encerrar Agora",
                 type: "choose"
             })
-     
+
             changeAlertOnAcceptFunction(() => handleAcceptedLogout)
         }
 
-        else if (option === "registered"){
+        else if (option === "registered") {
             changeAlertData({
                 title: "Sucesso",
                 descripton: "Agenda atualizada com sucesso!",
@@ -188,9 +219,10 @@ function Profile() {
 
     // FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS - CRUD //
     useEffect(() => {
-        if(rescuer_id) {
+        if (rescuer_id) {
             loadUserInformation()
             loadNotifications()
+            loadHelp("Desk")
             handleFirstAccessMessage()
         }
         else {
@@ -208,7 +240,7 @@ function Profile() {
         const scheduleItemsToDelete = scheduleItems.filter(item => item.action === 3 && item.id > 0)
 
         //Insert new items
-        if(scheduleItemsToInsert.length > 0){
+        if (scheduleItemsToInsert.length > 0) {
             api.post('schedules', {
                 rescuer_id,
                 schedules: scheduleItemsToInsert
@@ -218,7 +250,7 @@ function Profile() {
         }
 
         //Update items
-        if(scheduleItemsToUpdate.length > 0){
+        if (scheduleItemsToUpdate.length > 0) {
             api.put('schedules', {
                 rescuer_id,
                 schedules: scheduleItemsToUpdate
@@ -229,27 +261,27 @@ function Profile() {
         }
 
         //Delete Items
-        if(scheduleItemsToDelete.length > 0){
+        if (scheduleItemsToDelete.length > 0) {
             scheduleItemsToDelete.map(item => {
                 api.delete(
-                    'schedules', { 
-                        params: {
-                            id: item.id
-                        } 
+                    'schedules', {
+                    params: {
+                        id: item.id
                     }
+                }
                 ).catch(() => {
-                    console.log('Erro na exclusão do item '+item.id)
+                    console.log('Erro na exclusão do item ' + item.id)
                 })
-            });      
+            });
         }
 
         //Remover da lista itens com status 3 - exclusão
         let refreshItems = scheduleItems.filter(item => item.action !== 3)
 
         //Atualizar status para não haver insert duplicado
-        refreshItems = refreshItems.map((scheduleItem:any) => {
+        refreshItems = refreshItems.map((scheduleItem: any) => {
             return {
-                ...scheduleItem, 
+                ...scheduleItem,
                 action: 0
             }
         })
@@ -267,13 +299,23 @@ function Profile() {
         setNotificationItems(response.data)
     }
 
+    async function loadHelp(location: String) {
+        const response = await api.get('help', {
+            params: {
+                location,
+            }
+        })
+
+        setHelpItems(response.data)
+    }
+
     async function loadSchedules() {
         const response = await api.get('schedules', {
             params: {
                 rescuer_id,
             }
         })
-    
+
         setScheduleItems(response.data)
     }
 
@@ -285,11 +327,11 @@ function Profile() {
     }
 
     // FUNÇOES DE CONTROLE DE DADOS NA INTERFACE //
-    function removeScheduleItem(position:number, id:number){
-        const refreshItems = scheduleItems.map((scheduleItem:any, index: number) => {
-            if(scheduleItem.id === id) {
+    function removeScheduleItem(position: number, id: number) {
+        const refreshItems = scheduleItems.map((scheduleItem: any, index: number) => {
+            if (scheduleItem.id === id) {
                 return {
-                    ...scheduleItem, 
+                    ...scheduleItem,
                     action: 3
                 }
             }
@@ -300,7 +342,7 @@ function Profile() {
         setScheduleItems(refreshItems)
     }
 
-    function addNewScheduleItem(){
+    function addNewScheduleItem() {
         setScheduleItems([
             { id: -1, weekday: '0', from: '00:00', to: '00:00', action: 1 },
             ...scheduleItems
@@ -308,11 +350,11 @@ function Profile() {
         setChangeItems(true)
     }
 
-    function setScheduleItemValue(position:number, field: string, value:string){
+    function setScheduleItemValue(position: number, field: string, value: string) {
         const propsItems = scheduleItems.map((scheduleItem: any, index: number) => {
             //Item percorrido igual ao item de alteração
-            if(index === position) {
-                if(scheduleItem.action === 1) {
+            if (index === position) {
+                if (scheduleItem.action === 1) {
                     return {
                         ...scheduleItem,
                         [field]: value //sobrescreve o item com o novo valor
@@ -326,7 +368,7 @@ function Profile() {
                     }
                 }
             }
-            
+
             return scheduleItem
         })
 
@@ -336,14 +378,14 @@ function Profile() {
 
     return (
         <div id="page-profile" className="container">
-            <AlertDialog 
-                alertProps = {alertData}
-                isOpen = {alertDialogIsOpen}
-                onAccept= {alertOnAcceptFunction}
-                onClose= {handleCloseAlert}
+            <AlertDialog
+                alertProps={alertData}
+                isOpen={alertDialogIsOpen}
+                onAccept={alertOnAcceptFunction}
+                onClose={handleCloseAlert}
             />
 
-            <PageHeader 
+            <PageHeader
                 title={`Olá ${userData.name}, que bom que você está aqui agora!`}
                 description="Você pode ver aqui quem está precisando de ajuda  e organizar sua agenda."
                 logout={handleLogout}
@@ -352,31 +394,51 @@ function Profile() {
             <form id="menu-items">
                 <div className="input-block">
                     <button
-                        type="button" 
-                        id="notification" 
-                        className={notificationClassname} 
+                        type="button"
+                        id="notification"
+                        className={notificationClassname}
                         onClick={() => choseAlertData("discartChanges")}
                     >
                         Desk
                     </button>
                 </div>
                 <div className="input-block">
-                    <button 
-                        type="button" 
-                        id="agenda" 
-                        className={agendaClassname} 
+                    <button
+                        type="button"
+                        id="agenda"
+                        className={agendaClassname}
                         onClick={() => changeMenuOption("agenda")}
                     >
                         Agenda
                     </button>
                 </div>
+                <div className="input-block">
+                    <button
+                        type="button"
+                        id="help"
+                        className={helpClassname}
+                        onClick={() => changeMenuOption("help")}
+                    >
+                        Perguntas Frequentes
+                    </button>
+                </div>
             </form>
 
             <main>
-                { menuOption === "notification" ? 
+                {menuOption === "notification" ?
                     <div>
-                        { notificationItems[0] ?
-                            <Notification 
+                        <div>
+                            {helpItems[0] ?
+                                <HelpDesk
+                                    helpItems={helpItems}
+                                />
+                                :
+                                <span></span>
+                            }
+                        </div>
+                        {/*Notificações
+                        {notificationItems[0] ?
+                            <Notification
                                 notificationItems={notificationItems}
                                 openChat={handleOpenBlipDesk}
                             />
@@ -384,9 +446,9 @@ function Profile() {
                             <div>
                                 <p className="without-notifications">
                                     Nenhuma notificação de solicitação de auxílio.
-                                </p>             
+                                </p>
                             </div>
-                        }
+                        }*/}
 
                         <div className="open-blip-desk">
                             <button type="button" onClick={handleOpenBlipDesk}>Acessar o BLIP DESK</button>
@@ -394,35 +456,50 @@ function Profile() {
 
                     </div>
                     :
-                    <form onSubmit={handleInsertUpdate}> 
-                        <div className="agenda-buttons">
-                            <div className="new-schedule">
-                                <button type="button" onClick={addNewScheduleItem}>Incluir Novo</button>
+                    menuOption === "agenda" ?
+                        <form onSubmit={handleInsertUpdate}>
+                            <div className="agenda-buttons">
+                                <div className="new-schedule">
+                                    <button type="button" onClick={addNewScheduleItem}>Incluir Novo</button>
+                                </div>
+
+                                {scheduleItems[0] ?
+                                    <div className="save-schedules">
+                                        <button type="submit" >Salvar Alterações</button>
+                                    </div>
+                                    : null
+                                }
                             </div>
 
-                            { scheduleItems[0] ?
-                                <div className="save-schedules">
-                                    <button type="submit" >Salvar Alterações</button>
+                            {!scheduleItems[0] ?
+                                <div>
+                                    <p className="without-schedules">
+                                        Nenhum horário de atendimento cadastrado.
+                                </p>
                                 </div>
-                            : null
+                                : null
+                            }
+
+                            <Schedule
+                                scheduleItems={scheduleItems}
+                                alterSchedule={setScheduleItemValue}
+                                removeSchedule={removeScheduleItem}
+                            />
+                        </form>
+                        :
+                        <div>
+                            {helpItems[0] ?
+                                <Help
+                                    helpItems={helpItems}
+                                />
+                                :
+                                <div>
+                                    <p className="without-help">
+                                        Nenhuma pergunta frequente cadastrada.
+                                </p>
+                                </div>
                             }
                         </div>
-
-                        { !scheduleItems[0] ?
-                            <div>
-                                <p className="without-schedules">
-                                    Nenhum horário de atendimento cadastrado.
-                                </p>             
-                            </div>
-                        : null
-                        }
-
-                        <Schedule 
-                            scheduleItems={scheduleItems}
-                            alterSchedule={setScheduleItemValue}
-                            removeSchedule={removeScheduleItem}
-                        />
-                    </form> 
                 }
             </main>
         </div>

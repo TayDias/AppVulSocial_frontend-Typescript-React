@@ -1,0 +1,129 @@
+.helps {
+    padding-bottom: 0.5rem;
+}
+
+.help {
+    background: var(--color-box-base);
+    border: 1px solid var(--color-line-in-white);
+    border-radius: 0.8rem;
+    margin-top: 7rem;
+    overflow: hidden;
+    margin-bottom: 4rem;
+    padding-top: 1rem;
+}
+
+.help+.help {
+    margin-top: 2rem;
+}
+
+.help header {
+    padding: 3.2rem 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.help header div {
+    margin-left: 2.4rem;
+}
+
+.help header div strong {
+    font: 700 2rem Ubuntu;
+    display: block;
+    color: var(--color-text-title);
+}
+
+.help a {
+    text-decoration: none;
+}
+
+.help>p {
+    padding: 0 4.5rem;
+    font: 500 1.6rem Ubuntu;
+    line-height: 2.8rem;
+    color: var(--color-text-base);
+    padding-bottom: 2.4rem;
+}
+
+.help footer {
+    padding: 3.2rem 2rem;
+    background: var(--color-box-footer);
+    border-top: 1px solid var(--color-line-in-white);
+    margin-top: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.help footer button {
+    width: 19rem;
+    height: 5.6rem;
+    background: var(--color-secondary);
+    color: var(--color-button-text);
+    border: 0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: 700 1.4rem Ubuntu;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    transition: 0.2s;
+    outline: 0;
+}
+
+.help footer button:hover,
+.access-button:hover {
+    background: var(--color-secondary-dark);
+}
+
+@media (min-width: 700px) {
+    .help {
+        margin-top: 4rem;
+    }
+    .help+.help {
+        margin-top: 1rem;
+    }
+    .help>p {
+        padding-left: 5.6rem;
+    }
+    .help footer button {
+        width: 22rem;
+        font-size: 1.6rem;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+}
+
+.AC-Title {
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.AC-Desc {
+    font-size: 15px !important;
+}
+
+.AC-Text {
+    font-size: 18px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+.AC-Border {
+    border-top: 1px solid #5a5a5a !important;
+}
+
+.access-button {
+    width: 19rem;
+    height: 5.6rem;
+    background: var(--color-secondary);
+    color: var(--color-button-text);
+    border: 0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: 700 1.4rem Ubuntu;
+    transition: 0.2s;
+    outline: 0;
+    margin-top: 20px;
+    position: relative;
+    right: -525px;
+}

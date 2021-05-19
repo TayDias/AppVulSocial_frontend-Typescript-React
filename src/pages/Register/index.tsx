@@ -116,7 +116,6 @@ function Register() {
                     [field]: value  //sobrescreve o item com o novo valor
                 }
             }
-            
             return scheduleItem
         })
 
@@ -227,7 +226,7 @@ function Register() {
 
                         <StyledInput 
                             name="phone" 
-                            label="Telefone" 
+                            label="Telefone"
                             value={phone}
                             onChange={(e) => { setPhone(e.target.value) }}
                         />
@@ -307,13 +306,13 @@ function Register() {
                                             value={scheduleItem.weekday}
                                             onChange={e => setScheduleItemValue(index, 'weekday', e.target.value)}
                                             options={[
-                                                {id: '0', value: 'Domingo', label: 'Domingo'},
-                                                {id: '1', value: 'Segunda-Feira', label: 'Segunda-Feira'},
-                                                {id: '2', value: 'Terça-Feira', label: 'Terça-Feira'},
-                                                {id: '3', value: 'Quarta-Feira', label: 'Quarta-Feira'},
-                                                {id: '4', value: 'Quinta-Feira', label: 'Quinta-Feira'},
-                                                {id: '5', value: 'Sexta-Feira', label: 'Sexta-Feira'},
-                                                {id: '6', value: 'Sábado', label: 'Sábado'}                     
+                                                {id: '0', value: '0', label: 'Domingo'},
+                                                {id: '1', value: '1', label: 'Segunda-Feira'},
+                                                {id: '2', value: '2', label: 'Terça-Feira'},
+                                                {id: '3', value: '3', label: 'Quarta-Feira'},
+                                                {id: '4', value: '4', label: 'Quinta-Feira'},
+                                                {id: '5', value: '5', label: 'Sexta-Feira'},
+                                                {id: '6', value: '6', label: 'Sábado'}                     
                                             ]}
                                         />
             
