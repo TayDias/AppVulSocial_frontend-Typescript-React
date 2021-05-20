@@ -78,14 +78,26 @@ function Login() {
             }
 
             else {
-                if (response.data.RescuerAvailable === true) {
+                if (response.data.RescuerAvailable === true && response.data.type != "Admin") {
                     login(response.data.token)
                     localStorage.setItem('rescuer_id', response.data.id)
+                    localStorage.setItem('rescuer_type', response.data.type)
 
                     history.push('/profile')
-                } else {
+                } else if (response.data.RescuerAvailable === false && response.data.type != "Admin") {
                     choseAlertData("disabledUser")
                     handleOpenAlert()
+                }
+                else if (response.data.RescuerAvailable === false && response.data.type === "Admin") {
+                    choseAlertData("disabledUser")
+                    handleOpenAlert()
+                }
+                else if (response.data.RescuerAvailable === true && response.data.type === "Admin") {
+                    login(response.data.token)
+                    localStorage.setItem('rescuer_id', response.data.id)
+                    localStorage.setItem('rescuer_type', response.data.type)
+
+                    history.push('/admin')
                 }
             }
 

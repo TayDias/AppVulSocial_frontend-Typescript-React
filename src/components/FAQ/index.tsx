@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes } from 'react'
 import './styles.css'
 import 'react-dom'
-import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';

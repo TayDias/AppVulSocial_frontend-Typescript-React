@@ -7,6 +7,8 @@ import Help from '../../components/FAQ'
 import HelpDesk from '../../components/FAQDesk'
 import Schedule from '../../components/Schedule'
 import AlertDialog from '../../components/AlertDialog'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css'
 
@@ -16,11 +18,13 @@ import { logout } from '../../services/auth'
 function Profile() {
     const history = useHistory()
     const rescuer_id = localStorage.getItem('rescuer_id')
+    const rescuer_type = localStorage.getItem('rescuer_type')
 
     const [menuOption, setMenuOption] = useState("notification")
     const [agendaClassname, setAgendaClassname] = useState("off")
     const [notificationClassname, setNotificationClassname] = useState("on")
     const [helpClassname, setHelpClassname] = useState("off")
+    const [adminClassname, setAdminClassname] = useState("off")
 
     const [notificationItems, setNotificationItems] = useState([{
         id: 0,
@@ -219,14 +223,16 @@ function Profile() {
 
     // FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS - CRUD //
     useEffect(() => {
-        if (rescuer_id) {
+        if (rescuer_id && rescuer_type != "Admin") {
             loadUserInformation()
             loadNotifications()
             loadHelp("Desk")
             handleFirstAccessMessage()
         }
-        else {
-            alert("É necessário fazer o login para acessar seu perfil.")
+        else if (rescuer_id === null && rescuer_type != "Admin") {
+            history.push('/login')
+        }
+        else if (rescuer_id && rescuer_type === "Admin") {
             history.push('/login')
         }
 

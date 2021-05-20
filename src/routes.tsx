@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Chat from './pages/Chat'
+import Admin from './pages/Admin'
 
 import { isAuthenticated } from './services/auth'
 
@@ -40,6 +41,7 @@ const Routes = () => {
             <Route component={Login} path="/login" />
             <PrivateRoute component={Profile} path="/profile" />
             <PrivateRoute component={Chat} path="/chat" />
+            <PrivateRoute component={Admin} path="/admin"/>
         </BrowserRouter>
     )
 }

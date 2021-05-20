@@ -26,8 +26,7 @@ body {
     position: relative;
 }
 
-#menu-items .input-block #agenda,
-#menu-items .input-block #help {
+#menu-items .input-block #atendimento {
     margin-top: -1.4rem !important;
 }
 
@@ -71,8 +70,7 @@ body {
     width: 94%;
 }
 
-#page-profile main .without-notifications,
-#page-profile main .without-help {
+#page-profile main .without-users {
     position: flex;
     color: var(--color-text-base);
     max-width: 100%;
@@ -215,7 +213,7 @@ body {
     }
 
     #page-profile main .without-notifications,
-    #page-profile main .without-help {
+    #page-profile main .without-users {
         max-width: 100%;
         padding: 25% 25% 13% 25%;
         align-self: center;
