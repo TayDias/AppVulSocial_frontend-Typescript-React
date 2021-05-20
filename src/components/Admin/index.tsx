@@ -41,7 +41,7 @@ const Admin: React.FC<PageAdminProps> = ({ adminItems, ...rest }) => {
                                     {adminItem.id}
                                 </div>
                                 <div className="grid-item">
-                                    {adminItem.bio}
+                                    {adminItem.name}
                                 </div>
                                 <div className="grid-item">
                                     {adminItem.type}
