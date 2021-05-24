@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
 import PageHeader from '../../components/PageHeader'
@@ -28,10 +28,8 @@ function Profile() {
         email: "",
         bio: "",
         password: "",
+        action: 0
     }])
-
-    // Controle de alterações não salvas
-    const [changeItems, setChangeItems] = useState(false)
 
     const [userData, setUserData] = useState({
         name: "",
@@ -61,6 +59,16 @@ function Profile() {
             })
 
             changeAlertOnAcceptFunction(() => handleAcceptedLogout)
+        } else if (option === "deleteuser") {
+            changeAlertData({
+                title: "Atenção!",
+                descripton: "Deseja mesmo excluir este usuário?",
+                optionOne: "Não",
+                optionTwo: "Sim",
+                type: "choose"
+            })
+
+            changeAlertOnAcceptDeleteFunction(() => handleAcceptedDelete)
         }
     }
 
@@ -68,17 +76,22 @@ function Profile() {
     const [alertDialogIsOpen, changeAlertDialogStatus] = useState(false)
     const [alertOnAcceptFunction, changeAlertOnAcceptFunction] = useState(() => handleAcceptedLogout)
 
+    const [alertDialogDeleteIsOpen, changeAlertDialogDeleteStatus] = useState(false)
+    const [alertOnAcceptDeleteFunction, changeAlertOnAcceptDeleteFunction] = useState(() => handleAcceptedDelete)
+
 
     // FUNÇOES EXCLUSIVAS DE CONTROLE DA INTERFACE //
     function changeMenuOption(id: string) {
         if (id === "usuarios") {
-            loadAdmin()
+            if (rescuer_id != null) {
+                loadAdmin();
+            }
             setMenuOption("usuarios")
             setUsuariosClassname("on")
             setAtendimentosClassname("off")
         }
         if (id === "atendimento") {
-            setMenuOption("notification")
+            setMenuOption("atendimento")
             setAtendimentosClassname("on")
             setUsuariosClassname("off")
         }
@@ -92,6 +105,44 @@ function Profile() {
     async function handleAcceptedLogout() {
         logout()
         history.push('/')
+    }
+
+    async function handleDelete() {
+        choseAlertData("deleteuser");
+        handleOpenDeleteAlert();
+    }
+
+    async function handleAcceptedDelete() {
+        const id = localStorage.getItem("deleteID");
+        if (id != null) {
+            const refreshItems = adminItems.map((adminItem: any) => {
+                if (adminItem.id === parseInt(id)) {
+                    return {
+                        ...adminItem,
+                        action: 1
+                    }
+                }
+                return adminItem
+            })
+
+            api.delete(
+                'admin', {
+                params: {
+                    id: id
+                }
+            }
+            ).catch(() => {
+                console.log('Erro na exclusão do item ' + id)
+            })
+            setAdminItems(refreshItems)
+
+            setTimeout(() => {
+                loadAdmin();
+                setMenuOption("usuarios")
+                setUsuariosClassname("on")
+                setAtendimentosClassname("off")
+            }, 1000);
+        }
     }
 
     // FUNÇOES DE GERENCIAMENTO DE MENSAGEM DE ALERTA //
@@ -114,11 +165,19 @@ function Profile() {
         changeAlertDialogStatus(false)
     }
 
+    async function handleOpenDeleteAlert() {
+        changeAlertDialogDeleteStatus(true)
+    }
+
+    async function handleCloseDeleteAlert() {
+        changeAlertDialogDeleteStatus(false)
+    }
+
     // FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS - CRUD //
     useEffect(() => {
         if (rescuer_id && rescuer_type === "Admin") {
             loadUserInformation()
-            loadAdmin()
+            loadAdmin();
         }
         else if (rescuer_id === null) {
             history.push('/login')
@@ -130,7 +189,7 @@ function Profile() {
     }, [history, rescuer_id])
 
     async function loadAdmin() {
-        const response = await api.get('admin')
+        const response = await api.get(`adminuser/${rescuer_id}`)
 
         setAdminItems(response.data)
     }
@@ -142,6 +201,11 @@ function Profile() {
         setUserData(response.data)
     }
 
+    function deleteUserItem(id: number) {
+        localStorage.setItem('deleteID', `${id}`);
+        handleDelete();
+    }
+
     return (
         <div id="page-profile" className="container">
             <AlertDialog
@@ -151,9 +215,16 @@ function Profile() {
                 onClose={handleCloseAlert}
             />
 
+            <AlertDialog
+                alertProps={alertData}
+                isOpen={alertDialogDeleteIsOpen}
+                onAccept={alertOnAcceptDeleteFunction}
+                onClose={handleCloseDeleteAlert}
+            />
+
             <PageHeader
                 title={`Olá ${userData.name}, que bom que você está aqui agora!`}
-                description="Você pode ver aqui quem está precisando de ajuda  e organizar sua agenda."
+                description="Aqui você pode gerenciar os usuários do sistema."
                 logout={handleLogout}
             />
 
@@ -186,6 +257,7 @@ function Profile() {
                         {adminItems[0] ?
                             <Admin
                                 adminItems={adminItems}
+                                deleteUser={deleteUserItem}
                             />
                             :
                             <div>

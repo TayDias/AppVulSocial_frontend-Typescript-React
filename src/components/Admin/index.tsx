@@ -15,10 +15,12 @@ interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
         email: String,
         bio: String,
         password: String,
-    }[],
+        action: number,
+    }[]
+    deleteUser: any
 }
 
-const Admin: React.FC<PageAdminProps> = ({ adminItems, ...rest }) => {
+const Admin: React.FC<PageAdminProps> = ({ adminItems, deleteUser, ...rest }) => {
     return (
         <div>
             <div className="grid-container-title">
@@ -34,27 +36,29 @@ const Admin: React.FC<PageAdminProps> = ({ adminItems, ...rest }) => {
             </div>
             <article>
                 {adminItems.map((adminItem, index) => {
-                    return (
-                        <div key={Math.random()}>
-                            <div className="grid-container">
-                                <div className="grid-item">
-                                    {adminItem.id}
-                                </div>
-                                <div className="grid-item">
-                                    {adminItem.name}
-                                </div>
-                                <div className="grid-item">
-                                    {adminItem.type}
-                                </div>
-                                <div className="grid-item">
-                                    <FontAwesomeIcon className="grid-item-button" icon={faPencilAlt} />
-                                </div>
-                                <div className="grid-item">
-                                    <FontAwesomeIcon className="grid-item-button" icon={faTimes} />
+                    if (adminItem.action !== 1) {
+                        return (
+                            <div key={Math.random()}>
+                                <div className="grid-container">
+                                    <div className="grid-item">
+                                        {adminItem.id}
+                                    </div>
+                                    <div className="grid-item">
+                                        {adminItem.name}
+                                    </div>
+                                    <div className="grid-item">
+                                        {adminItem.type}
+                                    </div>
+                                    <div className="grid-item">
+                                        <FontAwesomeIcon className="grid-item-button" icon={faPencilAlt} />
+                                    </div>
+                                    <div className="grid-item">
+                                        <FontAwesomeIcon className="grid-item-button" onClick={e => deleteUser(adminItem.id)} icon={faTimes} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )
+                        )
+                    }
                 })}
             </article>
         </div>
