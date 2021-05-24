@@ -1,0 +1,188 @@
+#page-update {
+    margin: 40px 0px 40px 0px;
+}
+
+#page-update main {
+    background: var(--color-box-base);
+    width: 100%;
+    max-width: 74rem;
+    border-radius: 0.8rem;
+    margin: -3.2rem auto 3.2rem;
+    padding-top: 6.4rem;
+    overflow: hidden;
+}
+
+#page-update main fieldset {
+    border: 0;
+    padding: 0 2.4rem;
+}
+
+#page-update main fieldset+fieldset {
+    margin-top: 6.4rem;
+}
+
+#page-update main fieldset .schedule-item+.schedule-item {
+    padding-top: 2.6rem;
+}
+
+#page-update main fieldset legend {
+    font: 700 2.4rem Ubuntu;
+    color: var(--color-text-title);
+    margin-bottom: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--color-line-in-white);
+}
+
+#page-update main fieldset legend button {
+    background: none;
+    border: 0;
+    color: var(--color-primary);
+    font: 700 1.6rem Ubuntu;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#page-update main fieldset legend button {
+    background: none;
+    border: 0;
+    color: var(--color-primary);
+    font: 700 1.6rem Ubuntu;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#page-update main fieldset legend button:hover {
+    color: var(--color-primary-darker);
+}
+
+#page-update main footer {
+    padding: 4rem;
+    background: var(-color-box-footer);
+    border-top: 1px solid var(--color-line-in-white);
+    margin-top: 6.4rem;
+}
+
+#page-update main footer p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: var(--color-text-title);
+}
+
+.container {
+    width: 100vw;
+    max-width: 700px;
+}
+
+.grid-container-pass {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 10px;
+    row-gap: 10px;
+    padding-top: 10px;
+}
+
+.grid-item-pass {
+    grid-column: 2;
+}
+
+.back {
+    background: #9C98A6 !important;
+    transition: 0.2s;
+}
+
+.back:hover {
+    background: #94909b !important;
+}
+
+.update {
+    background: var(--color-box-base);
+    border: 1px solid var(--color-line-in-white);
+    border-radius: 0.8rem;
+    margin-top: 7rem;
+    overflow: hidden;
+    margin-bottom: 4rem;
+    padding-top: 1rem;
+}
+
+.update a {
+    text-decoration: none;
+}
+
+.update footer {
+    padding: 3.2rem 2rem;
+    background: var(--color-box-footer);
+    border-top: 1px solid var(--color-line-in-white);
+    margin-top: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: -30px !important;
+    margin-right: -30px !important;
+    margin-bottom: -30px !important;
+}
+
+.update footer button {
+    width: 19rem;
+    height: 5.6rem;
+    background: var(--color-secondary);
+    color: var(--color-button-text);
+    border: 0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: 700 1.4rem Ubuntu;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    transition: 0.2s;
+    outline: 0;
+}
+
+.update footer button:hover, .access-button:hover {
+    background: var(--color-secondary-dark);
+}
+
+@media (min-width: 700px) {
+    .update {
+        margin-top: 4rem;
+    }
+    .update+.update {
+        margin-top: 1rem;
+    }
+    .update>p {
+        padding-left: 5.6rem;
+    }
+    .update footer button {
+        width: 22rem;
+        font-size: 1.6rem;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+}
+
+.update-top {
+    color: #656565;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    font-size: 20px;
+    background: var(--color-box-footer);
+    border-bottom: 1px solid var(--color-line-in-white);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    padding-left: 50px !important;
+    justify-content: flex-start;
+    margin-left: -30px !important;
+    margin-right: -30px !important;
+    margin-top: -50px !important;
+}
+
+.update-form {
+    color: #9C98A6 !important;
+}

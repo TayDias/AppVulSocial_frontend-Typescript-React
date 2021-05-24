@@ -3,7 +3,11 @@ import { useHistory } from 'react-router'
 
 import PageHeader from '../../components/PageHeader'
 import Admin from '../../components/Admin'
+import AdminUpdateUser from '../../components/AdminUpdateUser'
 import AlertDialog from '../../components/AlertDialog'
+import StyledInput from '../../components/StyledInput'
+import StyledTextArea from '../../components/StyledTextArea'
+import StyledSelect from '../../components/StyledSelect'
 
 import './styles.css'
 
@@ -23,12 +27,23 @@ function Profile() {
         id: 0,
         name: "",
         type: "",
-        avaliable: 1,
+        available: 1,
         phone: "",
         email: "",
         bio: "",
         password: "",
         action: 0
+    }])
+
+    const [updateUserItems, setUpdateUserItems] = useState([{
+        id: 0,
+        name: "",
+        type: "",
+        available: 1,
+        phone: "",
+        email: "",
+        bio: "",
+        password: ""
     }])
 
     const [userData, setUserData] = useState({
@@ -63,8 +78,8 @@ function Profile() {
             changeAlertData({
                 title: "Atenção!",
                 descripton: "Deseja mesmo excluir este usuário?",
-                optionOne: "Não",
-                optionTwo: "Sim",
+                optionOne: "Cancelar",
+                optionTwo: "Excluir",
                 type: "choose"
             })
 
@@ -95,6 +110,15 @@ function Profile() {
             setAtendimentosClassname("on")
             setUsuariosClassname("off")
         }
+        if (id === "updateUser") {
+            setMenuOption("updateUser")
+            setUsuariosClassname("on")
+            setAtendimentosClassname("off")
+        }
+    }
+
+    async function handleExitEdit() {
+        changeMenuOption("usuarios")
     }
 
     async function handleLogout() {
@@ -206,6 +230,17 @@ function Profile() {
         handleDelete();
     }
 
+    async function loadUserUpdate(id: number) {
+        const response = await api.get(`adminupdate/${id}`)
+
+        setUpdateUserItems(response.data)
+    }
+
+    function updateUserItem(id: number) {
+        loadUserUpdate(id);
+        changeMenuOption("updateUser")
+    }
+
     return (
         <div id="page-profile" className="container">
             <AlertDialog
@@ -252,12 +287,13 @@ function Profile() {
             </form>
 
             <main>
-                {menuOption === "usuarios" ?
+                {menuOption === "usuarios" &&
                     <div>
                         {adminItems[0] ?
                             <Admin
                                 adminItems={adminItems}
                                 deleteUser={deleteUserItem}
+                                updateUser={updateUserItem}
                             />
                             :
                             <div>
@@ -267,11 +303,30 @@ function Profile() {
                             </div>
                         }
                     </div>
-                    :
+                }
+                {menuOption === "atendimento" &&
                     <div>
                         <p className="without-users">
                             Em desenvolvimento!
                         </p>
+                    </div>
+                }
+                {menuOption === "updateUser" &&
+                    <div>
+                        {updateUserItems[0] ?
+                            <div>
+                                <AdminUpdateUser
+                                    updateUserItems={updateUserItems}
+                                    editExit={handleExitEdit}
+                                />
+                            </div>
+                            :
+                            <div>
+                                <p className="without-users">
+                                    Nenhum usuário encontrado.
+                                </p>
+                            </div>
+                        }
                     </div>
                 }
             </main>

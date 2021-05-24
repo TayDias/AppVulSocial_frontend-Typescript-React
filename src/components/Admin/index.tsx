@@ -10,17 +10,18 @@ interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
         id: number,
         name: String,
         type: String,
-        avaliable: number,
+        available: number,
         phone: String,
         email: String,
         bio: String,
         password: String,
         action: number,
     }[]
-    deleteUser: any
+    deleteUser: any,
+    updateUser: any
 }
 
-const Admin: React.FC<PageAdminProps> = ({ adminItems, deleteUser, ...rest }) => {
+const Admin: React.FC<PageAdminProps> = ({ adminItems, deleteUser, updateUser, ...rest }) => {
     return (
         <div>
             <div className="grid-container-title">
@@ -50,10 +51,10 @@ const Admin: React.FC<PageAdminProps> = ({ adminItems, deleteUser, ...rest }) =>
                                         {adminItem.type}
                                     </div>
                                     <div className="grid-item">
-                                        <FontAwesomeIcon className="grid-item-button" icon={faPencilAlt} />
+                                        <FontAwesomeIcon className="grid-item-button" onClick={() => updateUser(adminItem.id)} icon={faPencilAlt} />
                                     </div>
                                     <div className="grid-item">
-                                        <FontAwesomeIcon className="grid-item-button" onClick={e => deleteUser(adminItem.id)} icon={faTimes} />
+                                        <FontAwesomeIcon className="grid-item-button" onClick={() => deleteUser(adminItem.id)} icon={faTimes} />
                                     </div>
                                 </div>
                             </div>

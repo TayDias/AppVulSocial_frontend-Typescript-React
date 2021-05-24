@@ -110,8 +110,13 @@ function Profile() {
         }
     }
 
-    async function handleContinueAction() {
+    async function handleContinueActionDesk() {
         changeMenuOption("notification")
+        setChangeItems(false)
+    }
+
+    async function handleContinueActionHelp() {
+        changeMenuOption("help")
         setChangeItems(false)
     }
 
@@ -163,7 +168,7 @@ function Profile() {
     }
 
     function choseAlertData(option: string) {
-        if (option === "discartChanges") {
+        if (option === "discartChangesDesk") {
             if (changeItems) {
                 changeAlertData({
                     title: "Atenção!",
@@ -173,11 +178,30 @@ function Profile() {
                     type: "choose"
                 })
 
-                changeAlertOnAcceptFunction(() => handleContinueAction)
+                changeAlertOnAcceptFunction(() => handleContinueActionDesk)
                 handleOpenAlert()
             }
             else {
-                handleContinueAction()
+                handleContinueActionDesk()
+            }
+
+        }
+
+        if (option === "discartChangesHelp") {
+            if (changeItems) {
+                changeAlertData({
+                    title: "Atenção!",
+                    descripton: "Notei que você não salvou as alterações feitas na agenda, deseja mesmo descarta-las?",
+                    optionOne: "Permanecer na agenda",
+                    optionTwo: "Descartar alterações",
+                    type: "choose"
+                })
+
+                changeAlertOnAcceptFunction(() => handleContinueActionHelp)
+                handleOpenAlert()
+            }
+            else {
+                handleContinueActionHelp()
             }
 
         }
@@ -403,7 +427,7 @@ function Profile() {
                         type="button"
                         id="notification"
                         className={notificationClassname}
-                        onClick={() => choseAlertData("discartChanges")}
+                        onClick={() => choseAlertData("discartChangesDesk")}
                     >
                         Desk
                     </button>
@@ -423,7 +447,7 @@ function Profile() {
                         type="button"
                         id="help"
                         className={helpClassname}
-                        onClick={() => changeMenuOption("help")}
+                        onClick={() => choseAlertData("discartChangesHelp")}
                     >
                         Perguntas Frequentes
                     </button>
@@ -495,9 +519,11 @@ function Profile() {
                         :
                         <div>
                             {helpItems[0] ?
-                                <Help
-                                    helpItems={helpItems}
-                                />
+                                <div>
+                                    <Help
+                                        helpItems={helpItems}
+                                    />
+                                </div>
                                 :
                                 <div>
                                     <p className="without-help">
