@@ -22,6 +22,7 @@ function Profile() {
     const [menuOption, setMenuOption] = useState("usuarios")
     const [usuariosClassname, setUsuariosClassname] = useState("on")
     const [atendimentosClassname, setAtendimentosClassname] = useState("off")
+    const [faqClassname, setFAQClassname] = useState("off")
 
     const [adminItems, setAdminItems] = useState([{
         id: 0,
@@ -104,16 +105,25 @@ function Profile() {
             setMenuOption("usuarios")
             setUsuariosClassname("on")
             setAtendimentosClassname("off")
+            setFAQClassname("off")
         }
         if (id === "atendimento") {
             setMenuOption("atendimento")
             setAtendimentosClassname("on")
             setUsuariosClassname("off")
+            setFAQClassname("off")
         }
         if (id === "updateUser") {
             setMenuOption("updateUser")
             setUsuariosClassname("on")
             setAtendimentosClassname("off")
+            setFAQClassname("off")
+        }
+        if (id === "faq") {
+            setMenuOption("faq")
+            setUsuariosClassname("off")
+            setAtendimentosClassname("off")
+            setFAQClassname("on")
         }
     }
 
@@ -241,6 +251,22 @@ function Profile() {
         changeMenuOption("updateUser")
     }
 
+    function alterUser(id: number, name: string, type: string, available: number, phone: string, email: string, bio: string, password: string) {
+        const refreshUserItems = updateUserItems.map((updateUserItem) => {
+            return {
+                id: id,
+                name: name,
+                type: type,
+                available: 1,
+                phone: phone,
+                email: email,
+                bio: bio,
+                password: password,
+            }
+        });
+        setUpdateUserItems(refreshUserItems);
+    }
+
     return (
         <div id="page-profile" className="container">
             <AlertDialog
@@ -284,6 +310,16 @@ function Profile() {
                         Atendimentos
                     </button>
                 </div>
+                <div className="input-block">
+                    <button
+                        type="button"
+                        id="atendimento"
+                        className={faqClassname}
+                        onClick={() => changeMenuOption("faq")}
+                    >
+                        Gerenciar FAQ
+                    </button>
+                </div>
             </form>
 
             <main>
@@ -317,6 +353,7 @@ function Profile() {
                             <div>
                                 <AdminUpdateUser
                                     updateUserItems={updateUserItems}
+                                    alterUser={alterUser}
                                     editExit={handleExitEdit}
                                 />
                             </div>
@@ -327,6 +364,13 @@ function Profile() {
                                 </p>
                             </div>
                         }
+                    </div>
+                }
+                {menuOption === "faq" &&
+                    <div>
+                        <p className="without-users">
+                            Em desenvolvimento!
+                        </p>
                     </div>
                 }
             </main>

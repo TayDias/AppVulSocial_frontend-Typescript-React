@@ -1,4 +1,6 @@
-import React, { FormEvent, InputHTMLAttributes } from 'react'
+//https://zenoamaro.github.io/react-quill/
+
+import React, { FormEvent, InputHTMLAttributes, useState } from 'react'
 
 import PageHeader from '../../components/PageHeader'
 import StyledInput from '../../components/StyledInput'
@@ -21,10 +23,19 @@ interface PageAdminUpdateUserProps extends InputHTMLAttributes<HTMLInputElement>
         bio: String,
         password: String
     }[],
+    alterUser: any,
     editExit: any
 }
 
-const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ updateUserItems, editExit, ...rest }) => {
+const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, updateUserItems, editExit, ...rest }) => {
+    const [Name, setName] = useState("");
+    const [Available, setAvailable] = useState(updateUserItems[0].available);
+    const [Phone, setPhone] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Bio, setBio] = useState("");
+    const [Password, setPassword] = useState("");
+    const [ConfrimPassword, setConfrimPassword] = useState("");
+
     return (
         <div className="update">
             <main>
@@ -33,8 +44,8 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ updateUserItems, 
                     <StyledSelect
                         name="status"
                         label="Status"
-                        defaultValue={updateUserItems[0].available}
-                        //onChange={(e) => { (e.target.value) }}
+                        value={Available}
+                        onChange={(e) => { setAvailable(parseInt(e.target.value)) }}
                         options={[
                             { id: '0', value: '0', label: 'Desabilitado' },
                             { id: '1', value: '1', label: 'Habilitado' }

@@ -1,4 +1,4 @@
-.helps {
+.helpsdesk {
     padding-bottom: 0.5rem;
 }
 
@@ -73,6 +73,24 @@
 .help footer button:hover,
 .access-button:hover {
     background: var(--color-secondary-dark);
+}
+
+@media (min-width: 700px) {
+    .help {
+        margin-top: 4rem;
+    }
+    .help+.help {
+        margin-top: 1rem;
+    }
+    .help>p {
+        padding-left: 5.6rem;
+    }
+    .help footer button {
+        width: 22rem;
+        font-size: 1.6rem;
+        justify-content: center;
+        margin-right: 1rem;
+    }
 }
 
 @media (min-width: 700px) {
