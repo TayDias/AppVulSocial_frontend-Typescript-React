@@ -257,7 +257,7 @@ function Profile() {
                 id: id,
                 name: name,
                 type: type,
-                available: 1,
+                available: available,
                 phone: phone,
                 email: email,
                 bio: bio,
