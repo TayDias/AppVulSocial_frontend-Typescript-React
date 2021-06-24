@@ -1,14 +1,15 @@
 //https://zenoamaro.github.io/react-quill/
 
-import React, { FormEvent, InputHTMLAttributes, useState, useEffect } from 'react'
+import React, { FormEvent, InputHTMLAttributes, useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 
-import PageHeader from '../../components/PageHeader'
-import StyledInput from '../../components/StyledInput'
-import StyledTextArea from '../../components/StyledTextArea'
-import StyledSelect from '../../components/StyledSelect'
-import AlertDialog from '../../components/AlertDialog'
-import uuidv4 from '../../utils/generateUuidv4'
-import warningIcon from '../../assets/images/icons/warning.svg'
+import PageHeader from '../../components/PageHeader';
+import StyledInput from '../../components/StyledInput';
+import StyledTextArea from '../../components/StyledTextArea';
+import StyledSelect from '../../components/StyledSelect';
+import AlertDialog from '../../components/AlertDialog';
+import uuidv4 from '../../utils/generateUuidv4';
+import warningIcon from '../../assets/images/icons/warning.svg';
 
 import './styles.css'
 
@@ -23,11 +24,14 @@ interface PageAdminUpdateUserProps extends InputHTMLAttributes<HTMLInputElement>
         bio: String,
         password: String
     }[],
-    alterUser: any,
+    alterUserSuccess: any,
+    alterUserError: any,
     editExit: any
 }
 
-const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, updateUserItems, editExit, ...rest }) => {
+const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUserSuccess, alterUserError, updateUserItems, editExit, ...rest }) => {
+    const history = useHistory();
+    
     const [Name, setName] = useState(updateUserItems[0].name);
     const [Available, setAvailable] = useState(updateUserItems[0].available);
     const [Phone, setPhone] = useState(updateUserItems[0].phone);
@@ -36,76 +40,22 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, update
     const [Password, setPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
 
-    const [alertData, changeAlertData] = useState({
-        title: "",
-        descripton: "",
-        optionOne: "",
-        optionTwo: "",
-        type: ""
-    })
+    async function handleUpdate(e: FormEvent) {
+        e.preventDefault();
 
-    const [alertDialogIsOpen, changeAlertDialogStatus] = useState(false)
-
-    useEffect(() => {
-        if (alertDialogIsOpen) {
-            if (alertData.type === 'visualize') {
-                setTimeout(() => {
-                    handleCloseAlert()
-                }, 2500)    //tempo de permanencia do alerta na tela
-            }
-        }
-
-    }, [alertDialogIsOpen])
-
-    function choseAlertData(option: string) {
-        if (option === "success") {
-            changeAlertData({
-                title: "Salvo com sucesso!",
-                descripton: "Edições do usuário salvo com sucesso.",
-                optionOne: "",
-                optionTwo: "",
-                type: "visualize"
-            })
-        }
-        else if (option === "incomplete") {
-            changeAlertData({
-                title: "Ops!",
-                descripton: "Por favor, preencha todos os dados antes de salvar.",
-                optionOne: "",
-                optionTwo: "",
-                type: "visualize"
-            })
-        }
-        else if (option === "password") {
-            changeAlertData({
-                title: "Ops!",
-                descripton: "Os campos senha e confirmação da senha não conferem.",
-                optionOne: "",
-                optionTwo: "",
-                type: "visualize"
-            })
-        }
-    }
-
-    async function handleOpenAlert() {
-        changeAlertDialogStatus(true)
-    }
-
-    async function handleCloseAlert() {
-        changeAlertDialogStatus(false)
-    }
-
-    function handleUpdate() {
-        if (Name !== "" || Phone !== "" || Email !== "" || Bio !== "") {
-            if (Password === ConfirmPassword) {
-                alterUser(updateUserItems[0].id, Name, updateUserItems[0].type, Available, Phone, Email, Bio, Password);
-            } else {
-                choseAlertData('password')
-                handleOpenAlert()
-            }
+        let Successful = false
+        if (Name.length === 0 || Phone.length === 0 || Email.length === 0 || Bio.length === 0) {
+            alterUserError('incomplete');
         } else {
-            choseAlertData('incomplete')
-            handleOpenAlert()
+            if (Password.toString() === ConfirmPassword.toString()) {
+                Successful = true;
+            } else {
+                alterUserError('password');
+            }
+        }
+
+        if (Successful === true) {
+            alterUserSuccess(updateUserItems[0].id, Name, updateUserItems[0].type, Available, Phone, Email, Bio, Password);
         }
     }
 
@@ -113,7 +63,7 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, update
         <div className="update">
             <main>
                 <div className="update-top">Edição do registro {updateUserItems[0].id}</div>
-                <form className="update-form">
+                <form onSubmit={handleUpdate} className="update-form">
                     <StyledSelect
                         name="status"
                         label="Status"
@@ -128,14 +78,14 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, update
                     <StyledInput
                         name="name"
                         label="Nome Completo"
-                        defaultValue={`${updateUserItems[0].name}`}
+                        defaultValue={`${Name}`}
                         onChange={(e) => { setName(e.target.value) }}
                     />
 
                     <StyledInput
                         name="phone"
                         label="Telefone"
-                        defaultValue={`${updateUserItems[0].phone}`}
+                        defaultValue={`${Phone}`}
                         onChange={(e) => { setPhone(e.target.value) }}
                     />
 
@@ -143,14 +93,14 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, update
                         name="email"
                         label="E-mail"
                         type="email"
-                        defaultValue={`${updateUserItems[0].email}`}
+                        defaultValue={`${Email}`}
                         onChange={(e) => { setEmail(e.target.value) }}
                     />
 
                     <StyledTextArea
                         name="bio"
                         label="Biografia"
-                        defaultValue={`${updateUserItems[0].bio}`}
+                        defaultValue={`${Bio}`}
                         onChange={(e) => { setBio(e.target.value) }}
                     />
 
@@ -177,7 +127,7 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUser, update
                         <button className="back" type="button" onClick={() => editExit()}>
                             Voltar sem salvar
                         </button>
-                        <button type="button" onClick={() => handleUpdate()}>
+                        <button type="submit">
                             Salvar alterações
                         </button>
                     </footer>

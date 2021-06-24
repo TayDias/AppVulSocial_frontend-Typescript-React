@@ -65,6 +65,36 @@ function Profile() {
     })
 
     function choseAlertData(option: string) {
+        if (option === "success") {
+            changeAlertData({
+                title: "Usuário Atualizado!",
+                descripton: "O usuário foi atualizado com sucesso.",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+
+        if (option === "password") {
+            changeAlertData({
+                title: "Atenção!",
+                descripton: "As senhas não coincidem.",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+
+        if (option === "incomplete") {
+            changeAlertData({
+                title: "Atenção!",
+                descripton: "Preencha todos os campos. Os campos de senha não é obrigatório!",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+
         if (option === "logout") {
             changeAlertData({
                 title: "Atenção!",
@@ -240,18 +270,16 @@ function Profile() {
         handleDelete();
     }
 
-    async function loadUserUpdate(id: number) {
+    async function updateUserItem(id: number) {
         const response = await api.get(`adminupdate/${id}`)
 
         setUpdateUserItems(response.data)
+
+        await changeMenuOption("updateUser")
     }
 
-    function updateUserItem(id: number) {
-        loadUserUpdate(id);
-        changeMenuOption("updateUser")
-    }
-
-    function alterUser(id: number, name: string, type: string, available: number, phone: string, email: string, bio: string, password: string) {
+    function alterUserSuccess(id: number, name: string, type: string, available: number, phone: string, email: string, bio: string, password: string) {
+        changeMenuOption("usuarios")
         const refreshUserItems = updateUserItems.map((updateUserItem) => {
             return {
                 id: id,
@@ -265,6 +293,16 @@ function Profile() {
             }
         });
         setUpdateUserItems(refreshUserItems);
+
+        choseAlertData('success')
+        handleOpenAlert()
+    }
+
+    function alterUserError(option: String) {
+        
+
+        choseAlertData(`${option}`)
+        handleOpenAlert()
     }
 
     return (
@@ -353,7 +391,8 @@ function Profile() {
                             <div>
                                 <AdminUpdateUser
                                     updateUserItems={updateUserItems}
-                                    alterUser={alterUser}
+                                    alterUserSuccess={alterUserSuccess}
+                                    alterUserError={alterUserError}
                                     editExit={handleExitEdit}
                                 />
                             </div>
