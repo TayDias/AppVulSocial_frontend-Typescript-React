@@ -3,12 +3,12 @@
 import React, { FormEvent, InputHTMLAttributes, useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
-import PageHeader from '../../components/PageHeader';
-import StyledInput from '../../components/StyledInput';
-import StyledTextArea from '../../components/StyledTextArea';
-import StyledSelect from '../../components/StyledSelect';
-import AlertDialog from '../../components/AlertDialog';
-import uuidv4 from '../../utils/generateUuidv4';
+import PageHeader from '../../../PageHeader';
+import StyledInput from '../../../StyledInput';
+import StyledTextArea from '../../../StyledTextArea';
+import StyledSelect from '../../../StyledSelect';
+import AlertDialog from '../../../AlertDialog';
+import uuidv4 from '../../../../utils/generateUuidv4';
 import warningIcon from '../../assets/images/icons/warning.svg';
 
 import './styles.css'
