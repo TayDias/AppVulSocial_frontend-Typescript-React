@@ -52,6 +52,10 @@ body, input, textarea, button {
     font: 500 1.6rem Ubuntu;
 }
 
+Editor {
+    font: 1.6rem Ubuntu !important;
+}
+
 .container {
     width: 90vw;
     max-width: 700px;

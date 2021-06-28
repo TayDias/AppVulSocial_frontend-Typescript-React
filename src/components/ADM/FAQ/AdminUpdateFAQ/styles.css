@@ -167,6 +167,7 @@
 }
 
 .update-top {
+    font-weight: bold;
     color: #656565;
     padding-top: 30px;
     padding-bottom: 20px;
@@ -185,4 +186,32 @@
 
 .update-form {
     color: #9C98A6 !important;
+}
+
+.quill {
+    font: normal 1.3rem Arial;
+    border: 1px solid #F1F1F1;
+    border-radius: 2px;
+}
+
+.input {
+    color: #656565;
+}
+
+.ql-container {
+    min-height: 10em;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    background: #fefcfc;
+}
+
+.ql-toolbar {
+    background: #eaecec;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    border-bottom: none;
+}
+
+.editor-space {
+    padding: 1rem;
 }

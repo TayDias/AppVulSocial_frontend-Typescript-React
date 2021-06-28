@@ -17,7 +17,6 @@ interface PageAdminUpdateUserProps extends InputHTMLAttributes<HTMLInputElement>
     updateUserItems: {
         id: number,
         name: String,
-        type: String,
         available: number,
         phone: String,
         email: String,
@@ -55,7 +54,7 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUserSuccess,
         }
 
         if (Successful === true) {
-            alterUserSuccess(updateUserItems[0].id, Name, updateUserItems[0].type, Available, Phone, Email, Bio, Password);
+            alterUserSuccess(updateUserItems[0].id, Name, Available, Phone, Email, Bio, Password);
         }
     }
 

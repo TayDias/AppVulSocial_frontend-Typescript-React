@@ -60,7 +60,6 @@ function Profile() {
     const [updateUserItems, setUpdateUserItems] = useState([{
         id: 0,
         name: "",
-        type: "",
         available: 1,
         phone: "",
         email: "",
@@ -119,7 +118,17 @@ function Profile() {
         if (option === "incomplete") {
             changeAlertData({
                 title: "Atenção!",
-                descripton: "Preencha todos os campos. Os campos de senha não é obrigatório!",
+                descripton: "Preencha todos os campos. Os campos de senha não são obrigatórios!",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+
+        if (option === "incompleteFAQ") {
+            changeAlertData({
+                title: "Atenção!",
+                descripton: "Preencha todos os campos. O campo de Descrição e URL não são obrigatórios!",
                 optionOne: "",
                 optionTwo: "",
                 type: "visualize"
@@ -398,13 +407,12 @@ function Profile() {
         await changeMenuOption("updateUser")
     }
 
-    function alterUserSuccess(id: number, name: string, type: string, available: number, phone: string, email: string, bio: string, password: string) {
+    async function alterUserSuccess(id: number, name: string, available: number, phone: string, email: string, bio: string, password: string) {
         changeMenuOption("usuarios")
         const refreshUserItems = updateUserItems.map((updateUserItem) => {
             return {
                 id: id,
                 name: name,
-                type: type,
                 available: available,
                 phone: phone,
                 email: email,
@@ -414,8 +422,17 @@ function Profile() {
         });
         setUpdateUserItems(refreshUserItems);
 
-        choseAlertData('success')
-        handleOpenAlert()
+        await api.put('adminupdateuser', {
+            id,
+            name,
+            available,
+            phone,
+            email,
+            bio,
+            password,
+        }).catch(() => {
+            console.log('Erro na alteração!')
+        })
     }
 
     function alterUserError(option: String) {
@@ -438,7 +455,7 @@ function Profile() {
         });
         setUpdateFAQItems(refreshFAQItems);
 
-        choseAlertData('success')
+        choseAlertData('successFAQ')
         handleOpenAlert()
     }
 
