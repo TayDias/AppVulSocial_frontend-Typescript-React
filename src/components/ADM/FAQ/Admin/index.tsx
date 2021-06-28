@@ -21,6 +21,7 @@ interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Admin: React.FC<PageAdminProps> = ({ FAQItems, deleteFAQ, updateFAQ, insertFAQ, ...rest }) => {
+
     return (
         <div>
             <div className="grid-container-title">
@@ -34,7 +35,7 @@ const Admin: React.FC<PageAdminProps> = ({ FAQItems, deleteFAQ, updateFAQ, inser
                     <p>Localização</p>
                 </div>
                 <div className="grid-item-title new-faq">
-                    <FontAwesomeIcon onClick={() => insertFAQ()} icon={faPlusCircle}/>
+                    <FontAwesomeIcon onClick={() => insertFAQ()} icon={faPlusCircle} />
                 </div>
             </div>
             <article>
@@ -47,7 +48,7 @@ const Admin: React.FC<PageAdminProps> = ({ FAQItems, deleteFAQ, updateFAQ, inser
                                         {FAQItem.id}
                                     </div>
                                     <div className="grid-item">
-                                        {FAQItem.title}
+                                        {FAQItem.title.replace(/<[^>]+>/g, '')}
                                     </div>
                                     <div className="grid-item">
                                         {FAQItem.location}

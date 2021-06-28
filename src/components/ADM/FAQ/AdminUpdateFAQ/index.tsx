@@ -56,8 +56,8 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
         }
     }
 
-    const modules = {
-        toolbar: [{ 'size': [] }, 'bold', 'italic', 'underline', 'strike', { 'color': ['#FFFFFF', '#000000', '#FF0000', '#FBFF00', '#15FF00', '#00F7FF', '#001AFF', '#FF00E6'] }, { 'background': ['#FFFFFF', '#000000', '#FF0000', '#FBFF00', '#15FF00', '#00F7FF', '#001AFF', '#FF00E6'] }, 'blockquote', { 'align': [] }, 'link']
+    const Modules = {
+        toolbar: ['bold', 'italic', 'underline', 'strike', { 'color': ['#212121', '#FF0000', '#FBFF00', '#15FF00', '#00F7FF', '#001AFF', '#FF00E6'] }, { 'background': ['#FFFFFF', '#212121', '#FF0000', '#FBFF00', '#15FF00', '#00F7FF', '#001AFF', '#FF00E6'] }, 'link']
     }
 
     return (
@@ -70,7 +70,7 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
                         theme="snow"
                         value={Title.toString()}
                         onChange={setTitle}
-                        modules={modules}
+                        modules={Modules}
                     />
                     <div className="editor-space"></div>
 
@@ -79,7 +79,7 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
                         theme="snow"
                         value={Desc.toString()}
                         onChange={setDesc}
-                        modules={modules}
+                        modules={Modules}
                         placeholder="Esta pergunta frequente não tem uma descrição."
                     />
                     <div className="editor-space"></div>
@@ -89,7 +89,7 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
                         theme="snow"
                         value={Text.toString()}
                         onChange={setText}
-                        modules={modules}
+                        modules={Modules}
                     />
                     <div className="editor-space"></div>
 

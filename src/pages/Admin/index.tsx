@@ -103,10 +103,30 @@ function Profile() {
             })
         }
 
+        if (option === "error") {
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Não foi possível atualizar este usuário, tente novamente mais tarde.",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+
         if (option === "successFAQ") {
             changeAlertData({
                 title: "Pergunta Frequente Atualizada!",
                 descripton: "A pergunta frequente foi atualizada com sucesso.",
+                optionOne: "",
+                optionTwo: "",
+                type: "visualize"
+            })
+        }
+
+        if (option === "errorFAQ") {
+            changeAlertData({
+                title: "Ops!",
+                descripton: "Não foi possível atualizar esta pergunta frequente, tente novamente mais tarde.",
                 optionOne: "",
                 optionTwo: "",
                 type: "visualize"
@@ -426,7 +446,6 @@ function Profile() {
     }
 
     async function alterUserSuccess(id: number, name: string, available: number, phone: string, email: string, bio: string, password: string) {
-        changeMenuOption("usuarios")
         const refreshUserItems = updateUserItems.map((updateUserItem) => {
             return {
                 id: id,
@@ -438,19 +457,43 @@ function Profile() {
                 password: password,
             }
         });
+
         setUpdateUserItems(refreshUserItems);
 
-        await api.put('adminupdateuser', {
-            id,
-            name,
-            available,
-            phone,
-            email,
-            bio,
-            password,
-        }).catch(() => {
-            console.log('Erro na alteração!')
-        })
+        if (!password) {
+            await api.post('adminupdateuser', {
+                id,
+                name,
+                available,
+                phone,
+                email,
+                bio,
+            }).then(() => {
+                choseAlertData('success')
+                handleOpenAlert()
+            }).catch(() => {
+                choseAlertData('error')
+                handleOpenAlert()
+            })
+            changeMenuOption("usuarios");
+        } else {
+            await api.post('adminupdateuserwp', {
+                id,
+                name,
+                available,
+                phone,
+                email,
+                bio,
+                password,
+            }).then(() => {
+                choseAlertData('success')
+                handleOpenAlert()
+            }).catch(() => {
+                choseAlertData('error')
+                handleOpenAlert()
+            })
+            changeMenuOption("usuarios");
+        }
     }
 
     function alterUserError(option: String) {
@@ -459,8 +502,7 @@ function Profile() {
         handleOpenAlert()
     }
 
-    function alterFAQSuccess(id: number, url: string, title: string, desc: string, text: string, location: string) {
-        changeMenuOption("faq")
+    async function alterFAQSuccess(id: number, url: string, title: string, desc: string, text: string, location: string) {
         const refreshFAQItems = updateFAQItems.map((updateFAQItem) => {
             return {
                 id: id,
@@ -473,8 +515,22 @@ function Profile() {
         });
         setUpdateFAQItems(refreshFAQItems);
 
-        choseAlertData('successFAQ')
-        handleOpenAlert()
+        await api.post('adminupdatefaq', {
+            id,
+            url,
+            title,
+            desc,
+            text,
+            location,
+        }).then(() => {
+            choseAlertData('successFAQ')
+            handleOpenAlert()
+        }).catch(() => {
+            choseAlertData('errorFAQ')
+            handleOpenAlert()
+        })
+        loadFAQ();
+        changeMenuOption("faq");
     }
 
     function alterFAQError(option: String) {
