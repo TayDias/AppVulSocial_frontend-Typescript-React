@@ -187,3 +187,15 @@
 .grid-item-button:hover {
     color: #000000;
 }
+
+.new-faq {
+    position: absolute;
+    color: #6A994E;
+    left: 72rem;
+    transition: all 500ms;
+}
+
+.new-faq:hover {
+    cursor: pointer;
+    color: #A7C957;
+}

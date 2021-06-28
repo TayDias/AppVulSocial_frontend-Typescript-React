@@ -57,6 +57,14 @@ function Profile() {
         location: "",
     }])
 
+    const [insertFAQItems, setInsertFAQItems] = useState([{
+        url: "",
+        title: "",
+        desc: "",
+        text: "",
+        location: "",
+    }])
+
     const [updateUserItems, setUpdateUserItems] = useState([{
         id: 0,
         name: "",
@@ -210,6 +218,12 @@ function Profile() {
         }
         if (id === "updatefaq") {
             setMenuOption("updatefaq")
+            setUsuariosClassname("off")
+            setAtendimentosClassname("off")
+            setFAQClassname("on")
+        }
+        if (id === "insertfaq") {
+            setMenuOption("insertfaq")
             setUsuariosClassname("off")
             setAtendimentosClassname("off")
             setFAQClassname("on")
@@ -394,6 +408,10 @@ function Profile() {
         await changeMenuOption("updatefaq")
     }
 
+    async function insertFAQItem() {
+        await changeMenuOption("insertfaq")
+    }
+
     function deleteUserItem(id: number) {
         localStorage.setItem('deleteID', `${id}`);
         handleDelete();
@@ -559,6 +577,7 @@ function Profile() {
                                 FAQItems={FAQItems}
                                 deleteFAQ={deleteFAQItem}
                                 updateFAQ={updateFAQItem}
+                                insertFAQ={insertFAQItem}
                             />
                             :
                             <div>
@@ -599,6 +618,29 @@ function Profile() {
                                     alterFAQError={alterFAQError}
                                     editExit={handleExitEditFAQ}
                                 />
+                            </div>
+                            :
+                            <div>
+                                <p className="without-users">
+                                    Nenhuma pergunta frequente cadastrada.
+                                </p>
+                            </div>
+                        }
+                    </div>
+                }
+                {menuOption === "insertfaq" &&
+                    <div>
+                        {insertFAQItems[0] ?
+                            <div>
+                                {/*<AdminUpdateFAQ
+                                    updateFAQItems={updateFAQItems}
+                                    alterFAQSuccess={alterFAQSuccess}
+                                    alterFAQError={alterFAQError}
+                                    editExit={handleExitEditFAQ}
+                                />*/}
+                                <p className="without-users">
+                                    Em desenvolvimento.
+                                </p>
                             </div>
                             :
                             <div>

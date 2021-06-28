@@ -2,7 +2,7 @@ import React, { InputHTMLAttributes } from 'react'
 import './styles.css'
 import 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -16,10 +16,11 @@ interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
         action: number,
     }[]
     deleteFAQ: any,
-    updateFAQ: any
+    updateFAQ: any,
+    insertFAQ: any
 }
 
-const Admin: React.FC<PageAdminProps> = ({ FAQItems, deleteFAQ, updateFAQ, ...rest }) => {
+const Admin: React.FC<PageAdminProps> = ({ FAQItems, deleteFAQ, updateFAQ, insertFAQ, ...rest }) => {
     return (
         <div>
             <div className="grid-container-title">
@@ -31,6 +32,9 @@ const Admin: React.FC<PageAdminProps> = ({ FAQItems, deleteFAQ, updateFAQ, ...re
                 </div>
                 <div className="grid-item-title">
                     <p>Localização</p>
+                </div>
+                <div className="grid-item-title new-faq">
+                    <FontAwesomeIcon onClick={() => insertFAQ()} icon={faPlusCircle}/>
                 </div>
             </div>
             <article>
