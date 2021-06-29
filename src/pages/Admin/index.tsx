@@ -6,6 +6,7 @@ import Admin from '../../components/ADM/Users/Admin'
 import AdminUpdateUser from '../../components/ADM/Users/AdminUpdateUser'
 import AdminFAQ from '../../components/ADM/FAQ/Admin'
 import AdminUpdateFAQ from '../../components/ADM/FAQ/AdminUpdateFAQ'
+import AdminInsertFAQ from '../../components/ADM/FAQ/AdminInsertFAQ'
 import AlertDialog from '../../components/AlertDialog'
 import StyledInput from '../../components/StyledInput'
 import StyledTextArea from '../../components/StyledTextArea'
@@ -539,6 +540,41 @@ function Profile() {
         handleOpenAlert()
     }
 
+    async function insertFAQSuccess(url: string, title: string, desc: string, text: string, location: string) {
+        const refreshFAQItems = insertFAQItems.map((insertFAQItem) => {
+            return {
+                url: "",
+                title: "",
+                desc: "",
+                text: "",
+                location: "",
+            }
+        });
+        setInsertFAQItems(refreshFAQItems);
+
+        await api.post('admininsertfaq', {
+            url,
+            title,
+            desc,
+            text,
+            location,
+        }).then(() => {
+            choseAlertData('successFAQ')
+            handleOpenAlert()
+        }).catch(() => {
+            choseAlertData('errorFAQ')
+            handleOpenAlert()
+        })
+        loadFAQ();
+        changeMenuOption("faq");
+    }
+
+    function insertFAQError(option: String) {
+
+        choseAlertData(`${option}`)
+        handleOpenAlert()
+    }
+
     return (
         <div id="page-profile" className="container">
             <AlertDialog
@@ -579,7 +615,7 @@ function Profile() {
                         Usuários
                     </button>
                 </div>
-                <div className="input-block">
+                {/*<div className="input-block">
                     <button
                         type="button"
                         id="atendimento"
@@ -588,7 +624,7 @@ function Profile() {
                     >
                         Atendimentos
                     </button>
-                </div>
+                </div>*/}
                 <div className="input-block">
                     <button
                         type="button"
@@ -688,15 +724,12 @@ function Profile() {
                     <div>
                         {insertFAQItems[0] ?
                             <div>
-                                {/*<AdminUpdateFAQ
-                                    updateFAQItems={updateFAQItems}
-                                    alterFAQSuccess={alterFAQSuccess}
-                                    alterFAQError={alterFAQError}
+                                <AdminInsertFAQ
+                                    insertFAQItems={insertFAQItems}
+                                    insertFAQSuccess={insertFAQSuccess}
+                                    insertFAQError={insertFAQError}
                                     editExit={handleExitEditFAQ}
-                                />*/}
-                                <p className="without-users">
-                                    Em desenvolvimento.
-                                </p>
+                                />
                             </div>
                             :
                             <div>

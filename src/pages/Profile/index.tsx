@@ -466,20 +466,6 @@ function Profile() {
                                 <span></span>
                             }
                         </div>
-                        {/*Notificações
-                        {notificationItems[0] ?
-                            <Notification
-                                notificationItems={notificationItems}
-                                openChat={handleOpenBlipDesk}
-                            />
-                            :
-                            <div>
-                                <p className="without-notifications">
-                                    Nenhuma notificação de solicitação de auxílio.
-                                </p>
-                            </div>
-                        }*/}
-
                         <div className="open-blip-desk">
                             <button type="button" onClick={handleOpenBlipDesk}>Acessar o BLIP DESK</button>
                         </div>
