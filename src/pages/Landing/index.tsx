@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from "react-router-dom";
 
 import logo from '../../assets/images/logo-white.png'
@@ -20,14 +20,16 @@ function Landing() {
     loadHelp("Landing");
 
     async function loadHelp(location: String) {
-        if (!helpItems[0].id) {
-            const response = await api.get('help', {
-                params: {
-                    location,
-                }
-            })
+        if (helpItems[0]) {
+            if (!helpItems[0].id) {
+                const response = await api.get('help', {
+                    params: {
+                        location,
+                    }
+                })
 
-            setHelpItems(response.data)
+                setHelpItems(response.data)
+            }
         }
     }
 
@@ -50,9 +52,12 @@ function Landing() {
                     </Link>
                 </div>
             </div>
-            <Help
-                helpItems={helpItems}
-            />
+            <div id="page-landing-help" className="help">
+                <h2>Perguntas Frequentes</h2>
+                <Help
+                    helpItems={helpItems}
+                />
+            </div>
         </div>
     )
 }

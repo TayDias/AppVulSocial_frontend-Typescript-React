@@ -1,17 +1,44 @@
 #page-landing {
     width: 100%;
+    height: 100%;
     min-height: 100%;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-flow: wrap;
 
     color: var(--color-text-in-primary);
     background: var(--color-primary);
 }
 
+.page-landing-content {
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+}
+
+.page-landing-help {
+    max-width: 80%;
+    height: 50%;
+}
+
+#page-landing-help {
+    border: none;
+    background: var(--color-primary);  
+}
+
+#page-landing-help h2 {
+    line-height: 3.6rem;
+    margin-left: 1rem;
+
+    display: flex;
+    justify-content: left;
+    color: var(--color-text-in-primary);
+}
+
 .logo-container img, h1 {
-    margin-top: 28rem;
+    margin-top: 8rem;
     height: 9rem;
     color: var(--color-title-in-primary);
     font-size: 3.4rem;
@@ -22,7 +49,7 @@
     text-align: center;
     margin-top: -2rem;
     margin-bottom: 1rem;
-    margin-left: 8%;
+    margin-left: 12%;
     max-height: 42rem;
     max-width: 50rem;
 
@@ -30,7 +57,6 @@
 
 .logo-container {
     text-align: center;
-    margin-bottom: 3.2rem;
 }
 
 .logo-container h2 {
@@ -48,6 +74,7 @@
     justify-content: center;
     margin-top: 2rem;
     margin-bottom: 4rem;
+    margin-left: 20px;
 }
 
 .buttons-container a {
@@ -84,17 +111,41 @@
 }
 
 /* Conversão desktop */
-@media (min-width: 1000px) {
-    #page-landing-content {
-        max-width: 1000px;
+@media (min-width: 1100px) {
+    #page-landing {
+        min-height: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        align-items: inline;
+        align-self: baseline;
+        
+        padding-left: 10%;
+        padding-right: 10%;
+    }
 
+    #page-landing-content {
+        min-height: 400px;
+        padding-bottom: 5rem;
+        align-items: center;
+        align-self: center;
+        
         display: grid;
-        grid-template-rows: 350px 1fr;
         grid-template-columns: 3fr 2fr;
+        column-gap: 15%;
+        
         grid-template-areas: 
             "title logo"
             "buttons none"
         ;
+    }
+
+    #page-landing-help {
+        max-width: 96%;
+        align-self: initial;
+        border: none;
+        background: var(--color-primary); 
     }
 
     .logo-container {
@@ -106,32 +157,31 @@
 
     .logo-container h2 {
         text-align: initial;
+        justify-content: left;
         font-size: 2.4rem;
-        margin-bottom: 8.2rem;
-        color: var(--color-title-in-primary);
+        margin-bottom: 2.2rem;
         margin-top: 1.8rem;
+
+        color: var(--color-title-in-primary);
     }
 
     .logo-container img, h1 {
         margin-top: -3%;
         height: 100%;
         font-size: 4.6rem;
-        margin-bottom: 5.2rem;
-        
+        margin-bottom: 4.2rem;   
     }
 
     .hero-image {
         grid-area: logo;
-        padding-left: 1rem;
         width: 100%;
         height: 100%;
         min-height: 40rem;
         min-width: 35rem;
         align-self: center;
         justify-self: center;
-        margin-right: auto;
-        margin-bottom: 1.6rem;
-        margin-top: 0;
+        margin-left: 20%;
+        margin-top: 20%;
         max-height: 100%;
         max-width: 100%;
     }
@@ -142,9 +192,18 @@
         height: 8.0rem;
         margin-top: 1%;
         margin-bottom: 2rem;
+        margin-left: 0px;
     }
 
     .buttons-container a {
         font-size: 2.3rem;
+    }
+}
+
+@media (min-width: 1500px) {
+    #page-landing-content {
+        padding-top: 5rem;
+        grid-template-columns: 800px;
+        column-gap: 20%;
     }
 }
