@@ -4,6 +4,7 @@ import { Route, BrowserRouter, Redirect, RouteProps } from 'react-router-dom'
 import Landing from './pages/Landing'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Credits from './pages/Credits'
 import Profile from './pages/Profile'
 import Chat from './pages/Chat'
 import Admin from './pages/Admin'
@@ -39,6 +40,7 @@ const Routes = () => {
             <Route component={Landing} path="/" exact />
             <Route component={Register} path="/register" />
             <Route component={Login} path="/login" />
+            <Route component={Credits} path="/credits" />
             <PrivateRoute component={Profile} path="/profile" />
             <PrivateRoute component={Chat} path="/chat" />
             <PrivateRoute component={Admin} path="/admin"/>

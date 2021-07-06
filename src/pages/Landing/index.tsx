@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router'
 import { Link } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton"
+import GroupIcon from '@material-ui/icons/Group'
 
 import logo from '../../assets/images/logo-white.png'
 import api from '../../services/api'
@@ -8,6 +11,8 @@ import Help from '../../components/FAQ'
 import './styles.css'
 
 function Landing() {
+    const history = useHistory()
+
     const [helpItems, setHelpItems] = useState([{
         id: 0,
         url: '',
@@ -33,8 +38,14 @@ function Landing() {
         }
     }
 
+    function goToCredits() {
+        history.push("/credits")
+    }
+
     return (
         <div id="page-landing">
+            <IconButton className="team-button" color="inherit" onClick={goToCredits}><GroupIcon fontSize="large"/></IconButton>
+
             <div id="page-landing-content" className="container">
                 <div className="logo-container">
                     <h1>Vulnerabilidade Social APP</h1>

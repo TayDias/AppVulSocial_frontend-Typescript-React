@@ -1,0 +1,126 @@
+#page-credits {
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    color: var(--color-text-in-primary);
+    background: var(--color-primary);
+
+    padding-top: 10%;
+}
+
+#page-credits .go-back {
+    display: block;
+    position: fixed;
+    top: 0px;
+
+    background-color: var(--color-primary);
+    color: var(--color-text-in-primary);
+    width: 90%;
+    padding: 2.4rem 0 10.6rem 0;
+    margin: 0 0 10% 10%;
+}
+
+#page-credits-content {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--color-box-base);
+    width: 60%;
+    min-height: 40rem;
+    min-width: 28%;
+    max-width: 120rem;
+    border-radius: 0.8rem;
+    margin: 2% auto 1rem;
+    overflow: hidden;
+
+    padding: 2.6rem;
+}
+
+.heads-list {
+    display: inline;
+    align-items: center;
+    justify-content: left;
+    column-gap: 8%;
+
+    outline: 0;
+    font: 1.6rem Ubuntu;
+    color: var(--color-input);
+}
+
+.head {
+    position: relative;
+    margin: 1rem;
+    margin-left: 3rem;
+}
+
+.team-list {
+    display: inline;
+    align-items: center;
+    justify-content: left;
+    column-gap: 12%;
+
+    
+    outline: 0;
+    font: 1.6rem Ubuntu;
+    color: var(--color-input);
+}
+
+.devs {
+    position: relative;
+    margin: 3rem;
+    padding-bottom: 5px;
+}
+
+.support {
+    position: relative;
+    margin: 3rem;
+    
+}
+
+.devs li {
+    padding-bottom: 5px;
+}
+
+.support li {
+    padding-bottom: 5px;
+}
+
+.page-credits-content h2 {
+    text-align: initial;
+    justify-content: left;
+    font-size: 2.4rem;
+    margin-bottom: 1.2rem;
+    margin-top: 1.8rem;
+    color: grey;
+}
+
+@media (min-width: 1000px) {
+    #page-credits {
+        padding-top: 5%;
+    }
+
+    #heads-list {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        margin: 1.8rem;
+    }
+
+    #team-list {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
+
+    #page-credits .go-back {
+        top: 20px;
+        padding: 0.6rem 0 10.6rem 0;
+    }
+
+}
