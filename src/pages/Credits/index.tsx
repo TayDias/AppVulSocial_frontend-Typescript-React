@@ -29,26 +29,19 @@ function Credits() {
                         <li>André Wronscki Ricardo</li>
                         <li>Gabriel Ribeiro Barbosa</li>
                         <li>Jihad Aymen Mostafá</li>
-                        <li>Vinicius Silva de Chaves</li>
-                        <li>Aluno 5</li>
-                        <li>Aluno 6</li>
-                        <li>Aluno 7</li>
-                        <li>Aluno 8</li>
-                        <li>Aluno 9</li>
-                        <li>Aluno 10</li>
+                        <li>Miguel Cavalheiro de Jesus Junior</li>
+                        <li>Mateus ...</li>
+                        <li>Pedro Santos Sell</li>
+                        <li>Vinicius Silva de Chaves</li>             
                     </ul>
 
-                    <ul className="support" id="support">   
+                    <ul className="support" id="support">
+                        <li>Eliza ...</li>
                         <li>Indianára Leonel Schulz</li>
                         <li>Maria Claudia Cardoso Bail</li>
-                        <li>Aluno 3</li>
-                        <li>Aluno 4</li>
-                        <li>Aluno 5</li>
-                        <li>Aluno 6</li>
-                        <li>Aluno 7</li>
-                        <li>Aluno 8</li>
-                        <li>Aluno 9</li>
-                        <li>Aluno 10</li>
+                        <li>Maria Julia Volpato Freitas</li>
+                        <li>Natan ...</li> 
+                        <li>Vinicius ...</li>
                     </ul>
                 </div>
             </div>
