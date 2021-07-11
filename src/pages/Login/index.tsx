@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link } from "react-router-dom"
 import { useHistory } from 'react-router'
 
@@ -78,13 +78,13 @@ function Login() {
             }
 
             else {
-                if (response.data.RescuerAvailable === true && response.data.type != "Admin") {
+                if (response.data.RescuerAvailable === true && response.data.type !== "Admin") {
                     login(response.data.token)
                     localStorage.setItem('rescuer_id', response.data.id)
                     localStorage.setItem('rescuer_type', response.data.type)
 
                     history.push('/profile')
-                } else if (response.data.RescuerAvailable === false && response.data.type != "Admin") {
+                } else if (response.data.RescuerAvailable === false && response.data.type !== "Admin") {
                     choseAlertData("disabledUser")
                     handleOpenAlert()
                 }

@@ -1,15 +1,10 @@
 //https://zenoamaro.github.io/react-quill/
 
 import React, { FormEvent, InputHTMLAttributes, useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
 
-import PageHeader from '../../../PageHeader';
 import StyledInput from '../../../StyledInput';
 import StyledTextArea from '../../../StyledTextArea';
 import StyledSelect from '../../../StyledSelect';
-import AlertDialog from '../../../AlertDialog';
-import uuidv4 from '../../../../utils/generateUuidv4';
-import warningIcon from '../../assets/images/icons/warning.svg';
 
 import './styles.css'
 
@@ -21,7 +16,8 @@ interface PageAdminUpdateUserProps extends InputHTMLAttributes<HTMLInputElement>
         phone: String,
         email: String,
         bio: String,
-        password: String
+        password: String,
+        userId: number
     }[],
     alterUserSuccess: any,
     alterUserError: any,
@@ -29,8 +25,6 @@ interface PageAdminUpdateUserProps extends InputHTMLAttributes<HTMLInputElement>
 }
 
 const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUserSuccess, alterUserError, updateUserItems, editExit, ...rest }) => {
-    const history = useHistory();
-    
     const [Name, setName] = useState(updateUserItems[0].name);
     const [Available, setAvailable] = useState(updateUserItems[0].available);
     const [Phone, setPhone] = useState(updateUserItems[0].phone);
@@ -54,7 +48,7 @@ const AdminUpdateUser: React.FC<PageAdminUpdateUserProps> = ({ alterUserSuccess,
         }
 
         if (Successful === true) {
-            alterUserSuccess(updateUserItems[0].id, Name, Available, Phone, Email, Bio, Password);
+            alterUserSuccess(updateUserItems[0].id, Name, Available, Phone, Email, Bio, Password, updateUserItems[0].userId);
         }
     }
 

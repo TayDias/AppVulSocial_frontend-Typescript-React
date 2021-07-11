@@ -52,6 +52,10 @@
     font-size: 3.4rem;
 }
 
+.hero-image {
+    min-height: 500px;
+}
+
 .logo-container h1 {
     padding-top: 1rem;
 }

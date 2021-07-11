@@ -1,14 +1,11 @@
-import React, { FormEvent, useState, useEffect } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
 import PageHeader from '../../components/PageHeader'
-import Notification from '../../components/Notification'
 import Help from '../../components/FAQ'
 import HelpDesk from '../../components/FAQDesk'
 import Schedule from '../../components/Schedule'
 import AlertDialog from '../../components/AlertDialog'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css'
 
@@ -24,7 +21,6 @@ function Profile() {
     const [agendaClassname, setAgendaClassname] = useState("off")
     const [notificationClassname, setNotificationClassname] = useState("on")
     const [helpClassname, setHelpClassname] = useState("off")
-    const [adminClassname, setAdminClassname] = useState("off")
 
     const [notificationItems, setNotificationItems] = useState([{
         id: 0,
@@ -211,7 +207,7 @@ function Profile() {
                 descripton: "Olá :-) Notei que esse é o seu primeiro acesso ao seu perfil. " +
                     "Para atender os que buscam ajuda você precisa ter um cadastro na plataforma Blip Desk. " +
                     "Por isso, caso não tenha, enviei um link de conclusão de cadastro para o seu e-mail. " +
-                    "Após se cadastrar por lá, você pode sempre ir direto para o local de atendimento por aqui, " +
+                    "Após se cadastrar lá, você pode sempre ir direto para o local de atendimento por aqui, " +
                     "no botão 'Acessar o Blip Desk'. Está Ok? ;-)",
                 optionOne: "Ok!",
                 optionTwo: '',
@@ -247,13 +243,13 @@ function Profile() {
 
     // FUNÇOES DE OPERAÇÕES EM BANCO DE DADOS - CRUD //
     useEffect(() => {
-        if (rescuer_id && rescuer_type != "Admin") {
+        if (rescuer_id && rescuer_type !== "Admin") {
             loadUserInformation()
             loadNotifications()
             loadHelp("Desk")
             handleFirstAccessMessage()
         }
-        else if (rescuer_id === null && rescuer_type != "Admin") {
+        else if (rescuer_id === null && rescuer_type !== "Admin") {
             history.push('/login')
         }
         else if (rescuer_id && rescuer_type === "Admin") {
@@ -466,20 +462,6 @@ function Profile() {
                                 <span></span>
                             }
                         </div>
-                        {/*Notificações
-                        {notificationItems[0] ?
-                            <Notification
-                                notificationItems={notificationItems}
-                                openChat={handleOpenBlipDesk}
-                            />
-                            :
-                            <div>
-                                <p className="without-notifications">
-                                    Nenhuma notificação de solicitação de auxílio.
-                                </p>
-                            </div>
-                        }*/}
-
                         <div className="open-blip-desk">
                             <button type="button" onClick={handleOpenBlipDesk}>Acessar o BLIP DESK</button>
                         </div>

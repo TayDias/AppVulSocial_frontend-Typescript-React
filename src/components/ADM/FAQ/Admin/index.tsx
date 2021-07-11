@@ -4,7 +4,6 @@ import 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
-
 interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
     FAQItems: {
         id: number,

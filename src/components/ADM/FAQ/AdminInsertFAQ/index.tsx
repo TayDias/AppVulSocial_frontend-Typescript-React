@@ -1,5 +1,3 @@
-//https://zenoamaro.github.io/react-quill/
-
 import React, { FormEvent, InputHTMLAttributes, useState } from 'react';
 
 import StyledInput from '../../../StyledInput';
@@ -9,29 +7,28 @@ import './styles.css'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-interface PageAdminUpdateFAQProps extends InputHTMLAttributes<HTMLInputElement> {
-    updateFAQItems: {
-        id: number,
+interface PageAdminInsertFAQProps extends InputHTMLAttributes<HTMLInputElement> {
+    insertFAQItems: {
         url: String,
         title: String,
         desc: String,
         text: String,
         location: String,
     }[],
-    alterFAQSuccess: any,
-    alterFAQError: any,
+    insertFAQSuccess: any,
+    insertFAQError: any,
     editExit: any
 }
 
-const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, alterFAQError, updateFAQItems, editExit, ...rest }) => {
+const AdminInsertFAQ: React.FC<PageAdminInsertFAQProps> = ({ insertFAQSuccess, insertFAQError, insertFAQItems, editExit, ...rest }) => {
 
-    const [URL, setURL] = useState(updateFAQItems[0].url);
-    const [Title, setTitle] = useState(updateFAQItems[0].title);
-    const [Desc, setDesc] = useState(updateFAQItems[0].desc);
-    const [Text, setText] = useState(updateFAQItems[0].text);
-    const [Location, setLocation] = useState(updateFAQItems[0].location);
+    const [URL, setURL] = useState(insertFAQItems[0].url);
+    const [Title, setTitle] = useState(insertFAQItems[0].title);
+    const [Desc, setDesc] = useState(insertFAQItems[0].desc);
+    const [Text, setText] = useState(insertFAQItems[0].text);
+    const [Location, setLocation] = useState(insertFAQItems[0].location);
 
-    async function handleUpdate(e: FormEvent) {
+    async function handleInsert(e: FormEvent) {
         e.preventDefault();
 
         let Successful = false
@@ -39,13 +36,13 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
         const NewText = Text.replace(/<[^>]+>/g, '');
 
         if (NewTitle.length === 0 || NewText.length === 0) {
-            alterFAQError('incompleteFAQ');
+            insertFAQError('incompleteFAQ');
         } else {
             Successful = true;
         }
 
         if (Successful === true) {
-            alterFAQSuccess(updateFAQItems[0].id, URL, Title, Desc, Text, Location);
+            insertFAQSuccess(URL, Title, Desc, Text, Location);
         }
     }
 
@@ -56,14 +53,15 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
     return (
         <div className="update">
             <main>
-                <div className="update-top">Edição do FAQ {updateFAQItems[0].id}</div>
-                <form onSubmit={handleUpdate} className="update-form">
+                <div className="update-top">Cadastrar FAQ</div>
+                <form onSubmit={handleInsert} className="update-form">
                     <p className="input">Título:</p>
                     <ReactQuill
                         theme="snow"
                         value={Title.toString()}
                         onChange={setTitle}
                         modules={Modules}
+                        placeholder="Insira um título. (CAMPO OBRIGATÓRIO)"
                     />
                     <div className="editor-space"></div>
 
@@ -73,7 +71,7 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
                         value={Desc.toString()}
                         onChange={setDesc}
                         modules={Modules}
-                        placeholder="Esta pergunta frequente não tem uma descrição."
+                        placeholder="Insira uma descrição breve. (CAMPO NÃO OBRIGATÓRIO)"
                     />
                     <div className="editor-space"></div>
 
@@ -83,6 +81,7 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
                         value={Text.toString()}
                         onChange={setText}
                         modules={Modules}
+                        placeholder="Insira um texto. (CAMPO OBRIGATÓRIO)"
                     />
                     <div className="editor-space"></div>
 
@@ -91,7 +90,7 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
                         label="URL"
                         defaultValue={`${URL}`}
                         onChange={(e) => { setURL(e.target.value) }}
-                        placeholder="Esta pergunta frequente não tem um link."
+                        placeholder="Insira um link. (CAMPO NÃO OBRIGATÓRIO)"
                     />
                     <div className="editor-space"></div>
 
@@ -110,10 +109,10 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
 
                     <footer className="resize-footer">
                         <button className="back" type="button" onClick={() => editExit()}>
-                            Voltar sem salvar
+                            Voltar sem Adicionar
                         </button>
                         <button type="submit">
-                            Salvar alterações
+                            Adicionar
                         </button>
                     </footer>
                 </form>
@@ -122,4 +121,4 @@ const AdminUpdateFAQ: React.FC<PageAdminUpdateFAQProps> = ({ alterFAQSuccess, al
     )
 }
 
-export default AdminUpdateFAQ
+export default AdminInsertFAQ

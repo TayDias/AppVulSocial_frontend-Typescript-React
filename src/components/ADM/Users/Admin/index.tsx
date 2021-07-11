@@ -4,7 +4,6 @@ import 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-
 interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
     adminItems: {
         id: number,
@@ -15,6 +14,7 @@ interface PageAdminProps extends InputHTMLAttributes<HTMLInputElement> {
         email: String,
         bio: String,
         password: String,
+        userId: number,
         action: number,
     }[]
     deleteUser: any,
@@ -54,7 +54,7 @@ const Admin: React.FC<PageAdminProps> = ({ adminItems, deleteUser, updateUser, .
                                         <FontAwesomeIcon className="grid-item-button" onClick={() => updateUser(adminItem.id)} icon={faPencilAlt} />
                                     </div>
                                     <div className="grid-item">
-                                        <FontAwesomeIcon className="grid-item-button" onClick={() => deleteUser(adminItem.id)} icon={faTimes} />
+                                        <FontAwesomeIcon className="grid-item-button" onClick={() => deleteUser(adminItem.userId)} icon={faTimes} />
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
 import PageHeader from '../../components/PageHeader'
@@ -6,10 +6,8 @@ import Admin from '../../components/ADM/Users/Admin'
 import AdminUpdateUser from '../../components/ADM/Users/AdminUpdateUser'
 import AdminFAQ from '../../components/ADM/FAQ/Admin'
 import AdminUpdateFAQ from '../../components/ADM/FAQ/AdminUpdateFAQ'
+import AdminInsertFAQ from '../../components/ADM/FAQ/AdminInsertFAQ'
 import AlertDialog from '../../components/AlertDialog'
-import StyledInput from '../../components/StyledInput'
-import StyledTextArea from '../../components/StyledTextArea'
-import StyledSelect from '../../components/StyledSelect'
 
 import './styles.css'
 
@@ -23,7 +21,7 @@ function Profile() {
 
     const [menuOption, setMenuOption] = useState("usuarios")
     const [usuariosClassname, setUsuariosClassname] = useState("on")
-    const [atendimentosClassname, setAtendimentosClassname] = useState("off")
+    //const [atendimentosClassname, setAtendimentosClassname] = useState("off")
     const [faqClassname, setFAQClassname] = useState("off")
 
     const [adminItems, setAdminItems] = useState([{
@@ -35,6 +33,7 @@ function Profile() {
         email: "",
         bio: "",
         password: "",
+        userId: 0,
         action: 0
     }])
 
@@ -72,7 +71,8 @@ function Profile() {
         phone: "",
         email: "",
         bio: "",
-        password: ""
+        password: "",
+        userId: 0
     }])
 
     const [userData, setUserData] = useState({
@@ -215,37 +215,37 @@ function Profile() {
             }
             setMenuOption("usuarios")
             setUsuariosClassname("on")
-            setAtendimentosClassname("off")
+            //setAtendimentosClassname("off")
             setFAQClassname("off")
         }
         if (id === "atendimento") {
             setMenuOption("atendimento")
-            setAtendimentosClassname("on")
+            //setAtendimentosClassname("on")
             setUsuariosClassname("off")
             setFAQClassname("off")
         }
         if (id === "updateUser") {
             setMenuOption("updateUser")
             setUsuariosClassname("on")
-            setAtendimentosClassname("off")
+            //setAtendimentosClassname("off")
             setFAQClassname("off")
         }
         if (id === "faq") {
             setMenuOption("faq")
             setUsuariosClassname("off")
-            setAtendimentosClassname("off")
+            //setAtendimentosClassname("off")
             setFAQClassname("on")
         }
         if (id === "updatefaq") {
             setMenuOption("updatefaq")
             setUsuariosClassname("off")
-            setAtendimentosClassname("off")
+            //setAtendimentosClassname("off")
             setFAQClassname("on")
         }
         if (id === "insertfaq") {
             setMenuOption("insertfaq")
             setUsuariosClassname("off")
-            setAtendimentosClassname("off")
+            //setAtendimentosClassname("off")
             setFAQClassname("on")
         }
     }
@@ -306,7 +306,7 @@ function Profile() {
                 loadAdmin();
                 setMenuOption("usuarios")
                 setUsuariosClassname("on")
-                setAtendimentosClassname("off")
+                //setAtendimentosClassname("off")
             }, 1000);
         }
     }
@@ -327,7 +327,8 @@ function Profile() {
             api.delete(
                 'adminfaqdel', {
                 params: {
-                    id: id
+                    id: id,
+                    rescuer_id: rescuer_id
                 }
             }
             ).catch(() => {
@@ -339,7 +340,7 @@ function Profile() {
                 loadAdmin();
                 setMenuOption("faq")
                 setFAQClassname("on")
-                setAtendimentosClassname("off")
+                //setAtendimentosClassname("off")
             }, 1000);
         }
     }
@@ -390,7 +391,7 @@ function Profile() {
         else if (rescuer_id === null) {
             history.push('/login')
         }
-        else if (rescuer_type != "Admin") {
+        else if (rescuer_type !== "Admin") {
             history.push('/login')
         }
 
@@ -438,14 +439,14 @@ function Profile() {
     }
 
     async function updateUserItem(id: number) {
-        const response = await api.get(`adminupdate/${id}`)
+        const response = await api.get(`getRescuerForUpdate/${id}`)
 
         setUpdateUserItems(response.data)
 
         await changeMenuOption("updateUser")
     }
 
-    async function alterUserSuccess(id: number, name: string, available: number, phone: string, email: string, bio: string, password: string) {
+    async function alterUserSuccess(id: number, name: string, available: number, phone: string, email: string, bio: string, password: string, userId: number) {
         const refreshUserItems = updateUserItems.map((updateUserItem) => {
             return {
                 id: id,
@@ -455,19 +456,21 @@ function Profile() {
                 email: email,
                 bio: bio,
                 password: password,
+                userId: userId
             }
         });
 
         setUpdateUserItems(refreshUserItems);
 
         if (!password) {
-            await api.post('adminupdateuser', {
+            await api.post('updateRescuerWithoutPass', {
                 id,
                 name,
                 available,
                 phone,
                 email,
                 bio,
+                userId
             }).then(() => {
                 choseAlertData('success')
                 handleOpenAlert()
@@ -477,7 +480,7 @@ function Profile() {
             })
             changeMenuOption("usuarios");
         } else {
-            await api.post('adminupdateuserwp', {
+            await api.post('updateRescuer', {
                 id,
                 name,
                 available,
@@ -485,6 +488,7 @@ function Profile() {
                 email,
                 bio,
                 password,
+                userId
             }).then(() => {
                 choseAlertData('success')
                 handleOpenAlert()
@@ -497,7 +501,6 @@ function Profile() {
     }
 
     function alterUserError(option: String) {
-
         choseAlertData(`${option}`)
         handleOpenAlert()
     }
@@ -534,7 +537,40 @@ function Profile() {
     }
 
     function alterFAQError(option: String) {
+        choseAlertData(`${option}`)
+        handleOpenAlert()
+    }
 
+    async function insertFAQSuccess(url: string, title: string, desc: string, text: string, location: string) {
+        const refreshFAQItems = insertFAQItems.map((insertFAQItem) => {
+            return {
+                url: "",
+                title: "",
+                desc: "",
+                text: "",
+                location: "",
+            }
+        });
+        setInsertFAQItems(refreshFAQItems);
+
+        await api.post('admininsertfaq', {
+            url,
+            title,
+            desc,
+            text,
+            location,
+        }).then(() => {
+            choseAlertData('successFAQ')
+            handleOpenAlert()
+        }).catch(() => {
+            choseAlertData('errorFAQ')
+            handleOpenAlert()
+        })
+        loadFAQ();
+        changeMenuOption("faq");
+    }
+
+    function insertFAQError(option: String) {
         choseAlertData(`${option}`)
         handleOpenAlert()
     }
@@ -579,7 +615,7 @@ function Profile() {
                         Usuários
                     </button>
                 </div>
-                <div className="input-block">
+                {/*<div className="input-block">
                     <button
                         type="button"
                         id="atendimento"
@@ -588,7 +624,7 @@ function Profile() {
                     >
                         Atendimentos
                     </button>
-                </div>
+                </div>*/}
                 <div className="input-block">
                     <button
                         type="button"
@@ -688,15 +724,12 @@ function Profile() {
                     <div>
                         {insertFAQItems[0] ?
                             <div>
-                                {/*<AdminUpdateFAQ
-                                    updateFAQItems={updateFAQItems}
-                                    alterFAQSuccess={alterFAQSuccess}
-                                    alterFAQError={alterFAQError}
+                                <AdminInsertFAQ
+                                    insertFAQItems={insertFAQItems}
+                                    insertFAQSuccess={insertFAQSuccess}
+                                    insertFAQError={insertFAQError}
                                     editExit={handleExitEditFAQ}
-                                />*/}
-                                <p className="without-users">
-                                    Em desenvolvimento.
-                                </p>
+                                />
                             </div>
                             :
                             <div>

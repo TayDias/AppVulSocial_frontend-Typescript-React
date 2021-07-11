@@ -36,12 +36,10 @@ const Help: React.FC<PageHelpProps> = ({ helpItems, ...rest }) => {
                                 <AccordionDetails className="AC-Border">
                                     <Typography>
                                         <p className="AC-Text" dangerouslySetInnerHTML={{__html: `${helpItem.text}`}}></p>
-                                        {helpItem.url != null ?
+                                        {helpItem.url !== null && helpItem.url !== "" && helpItem.url !== " " && helpItem.url !== undefined &&
                                             <a href={helpItem.url} target="_blank">
                                                 <button type="button" id="access" className="access-button">Acessar</button>
                                             </a>
-                                            :
-                                            <div></div>
                                         }
                                     </Typography>
                                 </AccordionDetails>

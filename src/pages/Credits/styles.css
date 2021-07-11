@@ -1,6 +1,6 @@
 #page-credits {
     width: 100%;
-    height: 100%;
+    height: auto;
     min-width: 100%;
     min-height: 100%;
 
@@ -15,31 +15,32 @@
 
 #page-credits .go-back {
     display: block;
-    position: fixed;
+    position: absolute;
     top: 0px;
 
     background-color: var(--color-primary);
     color: var(--color-text-in-primary);
     width: 90%;
-    padding: 2.4rem 0 10.6rem 0;
-    margin: 0 0 10% 10%;
+    padding: 1.6rem 0 0 2rem;
+    margin: 1rem 0 10% 10%;
 }
 
 #page-credits-content {
-    position: relative;
+    position: fixed;
     align-items: center;
     justify-content: center;
+    align-self: center;
 
-    background: var(--color-box-base);
-    width: 60%;
-    min-height: 40rem;
+    width: 68%;
+    height: auto;
     min-width: 28%;
     max-width: 120rem;
     border-radius: 0.8rem;
-    margin: 2% auto 1rem;
+    margin: 6% auto 1rem;
     overflow: hidden;
+    padding: 3rem;
 
-    padding: 2.6rem;
+    background: var(--color-box-base);
 }
 
 .heads-list {
@@ -63,8 +64,7 @@
     display: inline;
     align-items: center;
     justify-content: left;
-    column-gap: 12%;
-
+    column-gap: 11%;
     
     outline: 0;
     font: 1.6rem Ubuntu;
@@ -74,7 +74,6 @@
 .devs {
     position: relative;
     margin: 3rem;
-    padding-bottom: 5px;
 }
 
 .support {
@@ -84,11 +83,26 @@
 }
 
 .devs li {
-    padding-bottom: 5px;
+    padding-bottom: 1rem;
 }
 
 .support li {
-    padding-bottom: 5px;
+    padding-bottom: 1rem;
+}
+
+#page-credits-content img {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    margin-bottom: -7px;
+}
+
+a {
+    margin-left: 8px;
+}
+
+a + a {
+    margin-left: 0 !important;
 }
 
 .page-credits-content h2 {
@@ -102,14 +116,20 @@
 
 @media (min-width: 1000px) {
     #page-credits {
-        padding-top: 5%;
+        padding-top: 4%;
+    }
+
+    #page-credits-content {
+        position: relative;
+        justify-content: baseline;
     }
 
     #heads-list {
-        display: flex;
+        display: inline;
         align-items: center;
         justify-content: left;
-        margin: 1.8rem;
+        column-gap: 8%;
+        padding: 1rem;
     }
 
     #team-list {
@@ -120,7 +140,8 @@
 
     #page-credits .go-back {
         top: 20px;
-        padding: 0.6rem 0 10.6rem 0;
+        padding: 0.6rem 0 0 0;
+        margin: 2rem 0 0 8% !important;
     }
 
 }
