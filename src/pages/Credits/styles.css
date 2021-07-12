@@ -1,3 +1,8 @@
+html { 
+    overflow-y: scroll; 
+    background: var(--color-primary);
+}
+
 #page-credits {
     width: 100%;
     height: auto;
@@ -26,7 +31,7 @@
 }
 
 #page-credits-content {
-    position: fixed;
+    position: absolute;
     align-items: center;
     justify-content: center;
     align-self: center;
@@ -36,11 +41,14 @@
     min-width: 28%;
     max-width: 120rem;
     border-radius: 0.8rem;
-    margin: 6% auto 1rem;
-    overflow: hidden;
-    padding: 3rem;
+    margin: 1% auto 1rem;
+    padding: 3rem 3rem 4rem 3.5rem;
 
     background: var(--color-box-base);
+}
+
+.page-credits-content .team-title {
+    margin-top: 4rem;
 }
 
 .heads-list {
@@ -56,8 +64,16 @@
 
 .head {
     position: relative;
-    margin: 1rem;
-    margin-left: 3rem;
+    margin: 1rem 1rem 2rem 3rem;
+}
+
+.head p {
+    padding-bottom: 0.5rem;
+}
+
+.head p + p{
+    padding-bottom: 0.2 !important;
+    color: slategrey;
 }
 
 .team-list {
@@ -67,19 +83,25 @@
     column-gap: 11%;
     
     outline: 0;
+}
+
+.team-list ul {
     font: 1.6rem Ubuntu;
     color: var(--color-input);
 }
 
+.team p {
+    margin-top: 2.5rem;
+}
+
 .devs {
     position: relative;
-    margin: 3rem;
+    margin: 2.5rem 0 0 3rem;
 }
 
 .support {
     position: relative;
-    margin: 3rem;
-    
+    margin: 2.5rem 0 0 3rem;
 }
 
 .devs li {
@@ -88,6 +110,11 @@
 
 .support li {
     padding-bottom: 1rem;
+}
+
+.team p {
+    font: 1.8rem Ubuntu;
+    color: grey;
 }
 
 #page-credits-content img {
@@ -115,33 +142,49 @@ a + a {
 }
 
 @media (min-width: 1000px) {
-    #page-credits {
-        padding-top: 4%;
+    #page-credits {  
+        height: auto;
+        min-height: 100%;
+        padding-top: 7%;
     }
 
     #page-credits-content {
-        position: relative;
-        justify-content: baseline;
+        width: 78%;
+        height: auto;
+
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
     }
 
     #heads-list {
-        display: inline;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+        align-items: initial;
         justify-content: left;
-        column-gap: 8%;
-        padding: 1rem;
     }
 
     #team-list {
         display: flex;
-        align-items: center;
-        justify-content: left;
+        align-items: initial;
+        justify-content: space-between;
+        margin-left: 0.5rem;
+    }
+
+    .team {
+        width: 50%;
     }
 
     #page-credits .go-back {
-        top: 20px;
-        padding: 0.6rem 0 0 0;
-        margin: 2rem 0 0 8% !important;
+        margin: 2rem 0 2rem 8% !important;
     }
 
+}
+
+
+@media (min-width: 1400px) {
+    #page-credits {  
+        padding-top: 5%;
+    }
 }
