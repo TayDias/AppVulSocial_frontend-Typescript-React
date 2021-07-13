@@ -1,6 +1,5 @@
 html { 
     overflow-y: scroll; 
-    background: var(--color-primary);
 }
 
 #page-credits {
