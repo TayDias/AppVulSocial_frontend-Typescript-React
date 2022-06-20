@@ -2,7 +2,7 @@
 
 * NPM: https://docs.npmjs.com/cli/v6/commands/npm-install
 * NODE: https://nodejs.org/en/download/
-* YARN: https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable
+* REACT: https://pt-br.reactjs.org/docs/create-a-new-react-app.html#create-react-app
 
 ## Dependnecias desse projeto
 
