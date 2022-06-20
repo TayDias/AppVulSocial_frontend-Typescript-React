@@ -1,6 +1,7 @@
 # Usando o node e o Yarn
 
 * NPM: https://docs.npmjs.com/cli/v6/commands/npm-install
+* NODE: https://nodejs.org/en/download/
 * YARN: https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable
 
 ## Dependnecias desse projeto
