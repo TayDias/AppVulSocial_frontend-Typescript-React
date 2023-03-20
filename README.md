@@ -4,7 +4,7 @@
 * NODE: https://nodejs.org/en/download/
 * REACT: https://pt-br.reactjs.org/docs/create-a-new-react-app.html#create-react-app
 
-## Dependnecias desse projeto
+## Dependencias desse projeto
 
 * @material-ui/core
 * @material-ui/icons
