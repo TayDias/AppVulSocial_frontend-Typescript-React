@@ -1,4 +1,4 @@
-<h1 align="center"> App react.js - Projeto de extensão Unisul</h1>
+<h1 align="center"> App React.js - Projeto de extensão Unisul</h1>
 
 <p>O objetivo da aplicação é fornecer a interface web para realização de determinadas funcionalidades previstas no projeto.</p>
 
@@ -31,7 +31,7 @@
 - [Bootstrap](https://getbootstrap.com)
 - [Styled-components](https://styled-components.com)
 - [Material-Icons](https://mui.com/material-ui/material-icons/)
-- [Polished]([polished](https://polished.js.org)
+- [Polished](https://polished.js.org)
 - [Font-Awesome](https://fontawesome.com/v5/docs/web/use-with/react)
 
 ## Outras blibliotecas Npm
