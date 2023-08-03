@@ -22,6 +22,7 @@
 
 # Tecnologias utilizadas
 
+- [Node](https://nodejs.org/en/download/)
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [React](https://pt-br.reactjs.org/docs/create-a-new-react-app.html#create-react-app)
 - [Typescript](https://www.typescriptlang.org)
