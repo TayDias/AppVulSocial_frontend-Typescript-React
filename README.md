@@ -2,7 +2,7 @@
 
 <p>O objetivo da aplicação é fornecer a interface web para realização de determinadas funcionalidades previstas no projeto.</p>
 
-* [Código do back-end do website mesmo projeto](https://github.com/TayDias/AppVulSocial_backend-Node-Typescript/edit/master/README.md)
+* [Código do back-end do website mesmo projeto](https://github.com/TayDias/AppVulSocial_backend-Typescript-NodeJS)
 * [Código do chatbot do mesmo projeto](https://github.com/TayDias/Chatbot-Grace---BLiP-Chat)
 
 
